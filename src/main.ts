@@ -9,4 +9,7 @@ if (environment.production) {
   enableProdMode();
 }
 
+/*
+ * AppModule is our main/root module which will be bootstrapped by Angular2 framework
+ */
 platformBrowserDynamic().bootstrapModule(AppModule);

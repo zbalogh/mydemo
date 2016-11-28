@@ -1,3 +1,28 @@
-<h1>
-  {{title}}
-</h1>
+
+<br>
+
+<!-- navigation menu -->
+<div align="center">
+    <nav>
+      <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+
+      <a routerLink="/users" routerLinkActive="active">User Management</a>
+
+      <a routerLink="/myInput" routerLinkActive="active">Input Example</a>
+
+      <a routerLink="/messages" routerLinkActive="active">Messages</a>
+
+      <a routerLink="/admin/settings" routerLinkActive="active">Settings</a>
+
+      <a routerLink="/about" routerLinkActive="active">About</a>
+
+      <a routerLink="/authentication" routerLinkActive="active">{{authenticationLinkLabel}}</a>
+    </nav>
+</div>
+
+<hr>
+
+<router-outlet></router-outlet>
+<!-- Routed views go here -->
+
+<br>
