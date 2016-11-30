@@ -49,9 +49,11 @@ app.route(REST_BASE_URI + '/users')
 
   .post((req, res) => {
     // convert JSON string (request body) to JSON object
-    var newUser = JSON.parse(req.body);
+    //var newUser = JSON.parse(req.body);
+    // NOTE: we do not need parse because the content-type is "application/json" in the HTTP header
+    var newUser = req.body;
 
-    // set ID with the incremented sequence
+      // set ID with the incremented sequence
     newUser.id = incrementUidSequence();
 
     // add the new user into the users array
@@ -63,7 +65,9 @@ app.route(REST_BASE_URI + '/users')
 
   .put((req, res) => {
     // convert JSON string (request body) to JSON object
-    var updatedUser = JSON.parse(req.body);
+    //var updatedUser = JSON.parse(req.body);
+    // NOTE: we do not need parse because the content-type is "application/json" in the HTTP header
+    var updatedUser = req.body;
 
     const id = updatedUser.id;
 

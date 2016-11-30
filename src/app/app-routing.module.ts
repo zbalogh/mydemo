@@ -1,8 +1,6 @@
 import {Routes, RouterModule} from "@angular/router";
 import {NgModule} from "@angular/core";
 
-import {UsersEditorViewComponent} from "./pages/users-editor.component";
-import {MyInputViewComponent} from "./pages/my-input-view.component";
 import {HomeComponent} from "./pages/app-home.component";
 import {PageNotFoundComponent} from "./pages/page-not-found.component";
 import {MessagesViewComponent} from "./pages/messages-view.component";
@@ -12,12 +10,18 @@ import {AuthenticationViewComponent} from "./pages/authentication-view.component
 import {MyAuthenticationGuard} from "./authentication/app-auth-guard";
 import {MyAuthenticationService} from "./authentication/app-auth.service";
 
+import {myUsersRouting} from "./my-form/my-form.module";
+import {myInputRouting} from "./my-input/my-input.module";
 
+
+/**
+ * defines the application routing which is used by RouterModule
+ */
 const appRoutes: Routes = [
 
-  { path: 'users', component: UsersEditorViewComponent, canActivate : [MyAuthenticationGuard] },
+    ...myUsersRouting,
 
-  { path: 'myInput', component: MyInputViewComponent, canActivate : [MyAuthenticationGuard] },
+    ...myInputRouting,
 
   { path: 'messages', component: MessagesViewComponent, canActivate : [MyAuthenticationGuard] },
 
