@@ -1,10 +1,12 @@
 import {NgModule} from "@angular/core/src/metadata/ng_module";
-import {MyInputComponent} from "./my-input.component";
-import {CommonModule} from "@angular/common";
-import {MyInputService} from "./my-input.service";
-import {ShowNamesComponent} from "./show-names.component";
 import {HttpModule} from "@angular/http";
 import {FormsModule} from "@angular/forms";
+import {CommonModule} from "@angular/common";
+
+import {MyInputComponent} from "./my-input.component";
+import {MyInputService} from "./my-input.service";
+import {ShowNamesComponent} from "./show-names.component";
+
 import {MyAuthenticationGuard} from "../authentication/app-auth-guard";
 import {MyInputViewComponent} from "../pages/my-input-view.component";
 
@@ -20,7 +22,8 @@ export const myInputRouting = [
 @NgModule({
   declarations: [
     MyInputComponent,
-    ShowNamesComponent
+    ShowNamesComponent,
+    MyInputViewComponent
   ],
   imports : [
     CommonModule,
@@ -28,7 +31,7 @@ export const myInputRouting = [
     HttpModule
   ],
   exports : [
-    MyInputComponent
+    MyInputViewComponent
   ],
   providers: [
     MyInputService

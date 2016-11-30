@@ -12,21 +12,15 @@ import "rxjs/Rx";
  */
 import {AppRoutingModule} from "./app-routing.module";
 import {AppPagesModule} from "./pages/app-pages.module";
-import {AppSharedModule} from "./shared/app-shared.module";
+import {MyInputModule} from "./my-input/my-input.module";
+import {MyFormModule} from "./my-form/my-form.module";
 
-/*
- * Import our components which will be used by this app module (root module)
- */
 import { AppComponent } from './app.component';
-import {HomeComponent} from "./pages/app-home.component";
-import {PageNotFoundComponent} from "./pages/page-not-found.component";
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    PageNotFoundComponent
+    AppComponent
   ],
 
   imports: [
@@ -36,7 +30,8 @@ import {PageNotFoundComponent} from "./pages/page-not-found.component";
     // my modules in the application
     AppRoutingModule,
     AppPagesModule,
-    AppSharedModule
+    MyInputModule,
+    MyFormModule
   ],
 
   providers : [
