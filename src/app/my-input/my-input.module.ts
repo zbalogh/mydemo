@@ -15,7 +15,7 @@ import {MyInputViewComponent} from "../pages/my-input-view.component";
 * defines the routing only for this module.
 * it is a lazy-loaded module. See the configuration in 'app-routing.module.ts' file
 */
-export const myInputRouting = [
+const myInputRouting = [
 
   { path: '', component: MyInputViewComponent, canActivate : [MyAuthenticationGuard] }
 

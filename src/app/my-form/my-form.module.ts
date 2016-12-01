@@ -16,7 +16,7 @@ import {AppSharedModule} from "../shared/app-shared.module";
  * defines the routing only for this module.
  * it is a lazy-loaded module. See the configuration in 'app-routing.module.ts' file
  */
-export const myUsersRouting = [
+const myUsersRouting = [
 
   { path: '', component: UsersEditorViewComponent, canActivate : [MyAuthenticationGuard] }
 

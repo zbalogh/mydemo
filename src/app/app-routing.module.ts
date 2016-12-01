@@ -3,8 +3,6 @@ import {NgModule} from "@angular/core";
 
 import {HomeComponent} from "./pages/app-home.component";
 import {PageNotFoundComponent} from "./pages/page-not-found.component";
-import {MessagesViewComponent} from "./pages/messages-view.component";
-import {AdminSettingsViewComponent} from "./pages/admin-settings-view.component";
 import {AboutViewComponent} from "./pages/about-view.component";
 import {AuthenticationViewComponent} from "./pages/authentication-view.component";
 
@@ -28,9 +26,17 @@ export const appRoutes: Routes = [
     loadChildren: './my-input/my-input.module'
   },
 
-  { path: 'messages', component: MessagesViewComponent, canActivate : [MyAuthenticationGuard] },
+  // lazy loaded module
+  {
+    path: 'messages',
+    loadChildren: './messages/my-messages.module'
+  },
 
-  { path: 'admin/settings', component: AdminSettingsViewComponent, canActivate : [MyAuthenticationGuard] },
+  // lazy loaded module
+  {
+    path: 'admin/settings',
+    loadChildren: './admin/settings/admin-settings.module'
+  },
 
   { path: 'about', component: AboutViewComponent },
 

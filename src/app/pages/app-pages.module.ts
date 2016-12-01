@@ -2,13 +2,10 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 
 /*
- * Import our page/view components used by navigation menu
+ * pages/views which are not used as lazy loading. it loaded with app/root module
  */
-import {MessagesViewComponent} from "./messages-view.component";
-import {AdminSettingsViewComponent} from "./admin-settings-view.component";
 import {AuthenticationViewComponent} from "./authentication-view.component";
 import {AboutViewComponent} from "./about-view.component";
-
 import {HomeComponent} from "./app-home.component";
 import {PageNotFoundComponent} from "./page-not-found.component";
 
@@ -17,8 +14,6 @@ import {PageNotFoundComponent} from "./page-not-found.component";
  */
 @NgModule({
   declarations: [
-    MessagesViewComponent,
-    AdminSettingsViewComponent,
     AboutViewComponent,
     AuthenticationViewComponent,
     HomeComponent,
@@ -29,8 +24,6 @@ import {PageNotFoundComponent} from "./page-not-found.component";
     CommonModule,
   ],
   exports : [
-    MessagesViewComponent,
-    AdminSettingsViewComponent,
     AboutViewComponent,
     AuthenticationViewComponent,
     HomeComponent,

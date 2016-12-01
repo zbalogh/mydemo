@@ -10,10 +10,10 @@ import {Component} from "@angular/core";
         
         <br>
         
-        <b>Email: zoltan.balogh@enghouse.com</b>
+        <b>Email: zbal1977@gmail.com</b>
         <br>
         
-        <b>Tel: +49-811-95949-634</b>
+        <b>Tel: +36-20-9595-555</b>
         <br>
         
       </div>
