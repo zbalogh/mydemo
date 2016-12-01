@@ -12,8 +12,6 @@ import "rxjs/Rx";
  */
 import {AppRoutingModule} from "./app-routing.module";
 import {AppPagesModule} from "./pages/app-pages.module";
-import {MyInputModule} from "./my-input/my-input.module";
-import {MyFormModule} from "./my-form/my-form.module";
 
 import { AppComponent } from './app.component';
 
@@ -29,9 +27,7 @@ import { AppComponent } from './app.component';
     CommonModule,
     // my modules in the application
     AppRoutingModule,
-    AppPagesModule,
-    MyInputModule,
-    MyFormModule
+    AppPagesModule
   ],
 
   providers : [

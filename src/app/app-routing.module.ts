@@ -7,21 +7,26 @@ import {MessagesViewComponent} from "./pages/messages-view.component";
 import {AdminSettingsViewComponent} from "./pages/admin-settings-view.component";
 import {AboutViewComponent} from "./pages/about-view.component";
 import {AuthenticationViewComponent} from "./pages/authentication-view.component";
+
 import {MyAuthenticationGuard} from "./authentication/app-auth-guard";
 import {MyAuthenticationService} from "./authentication/app-auth.service";
-
-import {myUsersRouting} from "./my-form/my-form.module";
-import {myInputRouting} from "./my-input/my-input.module";
-
 
 /**
  * defines the application routing which is used by RouterModule
  */
-const appRoutes: Routes = [
+export const appRoutes: Routes = [
 
-    ...myUsersRouting,
+  // lazy-loaded module
+  {
+    path: 'users',
+    loadChildren: './my-form/my-form.module'
+  },
 
-    ...myInputRouting,
+  // lazy loaded module
+  {
+    path: 'myInput',
+    loadChildren: './my-input/my-input.module'
+  },
 
   { path: 'messages', component: MessagesViewComponent, canActivate : [MyAuthenticationGuard] },
 

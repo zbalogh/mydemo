@@ -60,7 +60,7 @@ export class AuthenticationViewComponent {
    * @param username
    * @param password
    */
-  login(username: string, password: string) : void
+  login(username: string, password: string) : boolean
   {
       this.message = '';
 
@@ -79,18 +79,22 @@ export class AuthenticationViewComponent {
           // redirect the user the main/home page
           this.router.navigate(['/']);
       }
+
+      return false;
   }
 
   /**
    * logout from the application
    */
-  logout(): void
+  logout(): boolean
   {
       // let's logout
       this.authService.logout();
 
       // after logout redirect the browser to login page by full page reload
       //window.location.href = '/authentication';
+
+      return false;
   }
 
 }

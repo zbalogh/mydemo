@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
+import {RouterModule} from "@angular/router";
 
 import { MyFormComponent } from './my-form.component';
 import {MyUsersListComponent} from "./my-users-list.component";
@@ -12,11 +13,12 @@ import {MyAuthenticationGuard} from "../authentication/app-auth-guard";
 import {AppSharedModule} from "../shared/app-shared.module";
 
 /**
- * defines the routing only for this module
+ * defines the routing only for this module.
+ * it is a lazy-loaded module. See the configuration in 'app-routing.module.ts' file
  */
 export const myUsersRouting = [
 
-  { path: 'users', component: UsersEditorViewComponent, canActivate : [MyAuthenticationGuard] }
+  { path: '', component: UsersEditorViewComponent, canActivate : [MyAuthenticationGuard] }
 
 ];
 
@@ -27,6 +29,7 @@ export const myUsersRouting = [
     UsersEditorViewComponent
   ],
   imports: [
+    RouterModule.forChild(myUsersRouting),
     CommonModule,
     FormsModule,
     HttpModule,
@@ -39,4 +42,4 @@ export const myUsersRouting = [
     MyUsersService
   ]
 })
-export class MyFormModule { }
+export default class MyFormModule { }
