@@ -9,9 +9,16 @@ export class MyMessagesService {
     console.log('[MyMessagesService] initialized the service');
   }
 
-  public getAllMessages() : Message[]
+  /**
+   * It returns array of messages which matches the given search term.
+   *
+   * @returns {Array}
+   */
+  public getAllMessages(term : string) : Message[]
   {
     let messages = [];
+
+    //TODO: implement it!
 
     return messages;
   }
