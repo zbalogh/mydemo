@@ -7,7 +7,7 @@ import {RouterModule} from "@angular/router";
 import { MyFormComponent } from './my-form.component';
 import {MyUsersListComponent} from "./my-users-list.component";
 import {MyUsersService} from "./my-users.service";
-import {UsersEditorViewComponent} from "../pages/users-editor.component";
+import {UsersEditorViewComponent} from "./users-editor.component";
 
 import {MyAuthenticationGuard} from "../authentication/app-auth-guard";
 import {AppSharedModule} from "../shared/app-shared.module";

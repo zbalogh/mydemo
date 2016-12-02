@@ -9,7 +9,7 @@ import {MyInputService} from "./my-input.service";
 import {ShowNamesComponent} from "./show-names.component";
 
 import {MyAuthenticationGuard} from "../authentication/app-auth-guard";
-import {MyInputViewComponent} from "../pages/my-input-view.component";
+import {MyInputViewComponent} from "./my-input-view.component";
 
 /**
 * defines the routing only for this module.

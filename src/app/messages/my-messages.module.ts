@@ -9,7 +9,7 @@ import {AppSharedModule} from "../shared/app-shared.module";
 import {MyAuthenticationGuard} from "../authentication/app-auth-guard";
 import {MyMessagesService} from "./my-messages.service";
 
-import {MessagesViewComponent} from "../pages/messages-view.component";
+import {MessagesViewComponent} from "./messages-view.component";
 
 /**
  * defines the routing only for this module.

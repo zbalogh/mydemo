@@ -8,7 +8,7 @@ import {AppSharedModule} from "../../shared/app-shared.module";
 
 import {MyAuthenticationGuard} from "../../authentication/app-auth-guard";
 
-import {AdminSettingsViewComponent} from "../../pages/admin-settings-view.component";
+import {AdminSettingsViewComponent} from "./admin-settings-view.component";
 
 /**
  * defines the routing only for this module.
