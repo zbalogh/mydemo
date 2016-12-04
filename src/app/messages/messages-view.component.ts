@@ -16,7 +16,7 @@ import {Message} from "./message.model";
         <br><br>
         
         <div align="center" class="row col-sm-10">
-           <messages-list [messages]="messageList" (deleteMessage)="onDeleteMessage($event)"></messages-list>
+           <messages-list [messages]="messageList" [orderByColumns]="['+datetime', 'sender']" (deleteMessage)="onDeleteMessage($event)"></messages-list>
         </div>
         <br>
         

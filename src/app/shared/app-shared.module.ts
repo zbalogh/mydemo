@@ -3,6 +3,7 @@ import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import {ReactiveSearchInputComponent} from "./rx-search-input/rx-search-input.component";
+import {OrderByPipe} from "./pipes/orderby.pipe";
 
 /*
  * the common and shared module which is used by overall in the application.
@@ -11,7 +12,8 @@ import {ReactiveSearchInputComponent} from "./rx-search-input/rx-search-input.co
 
 @NgModule({
   declarations: [
-    ReactiveSearchInputComponent
+    ReactiveSearchInputComponent,
+    OrderByPipe
   ],
   imports: [
     // required modules from angular2 library
@@ -20,7 +22,8 @@ import {ReactiveSearchInputComponent} from "./rx-search-input/rx-search-input.co
     ReactiveFormsModule
   ],
   exports : [
-    ReactiveSearchInputComponent
+    ReactiveSearchInputComponent,
+    OrderByPipe
   ],
   providers: [
   ]

@@ -16,7 +16,7 @@ import {Message} from "./message.model";
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let msg of messageList">
+                <tr *ngFor="let msg of messageList | orderBy : orderByColumns">
                     <td>{{msg.id}}</td>
                     <td>{{msg.subject}}</td>
                     <td>{{msg.sender}}</td>
@@ -33,6 +33,9 @@ export class MessagesListComponent implements OnInit {
 
   @Input('messages')
   messageList : Message[];
+
+  @Input('orderByColumns')
+  orderByColumns : string[] = ['+datetime'];   // initialized with default orderBy definitions
 
   @Output('deleteMessage')
   deleteMessageEvent : EventEmitter<Message> = new EventEmitter<Message>();
