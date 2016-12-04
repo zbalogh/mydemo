@@ -10,6 +10,7 @@ import {MyAuthenticationGuard} from "../authentication/app-auth-guard";
 import {MyMessagesService} from "./my-messages.service";
 
 import {MessagesViewComponent} from "./messages-view.component";
+import {MessagesListComponent} from "./messages-list.component";
 
 /**
  * defines the routing only for this module.
@@ -26,7 +27,8 @@ const myMessagesRouting = [
  */
 @NgModule({
   declarations: [
-    MessagesViewComponent
+    MessagesViewComponent,
+    MessagesListComponent
   ],
   imports: [
     RouterModule.forChild(myMessagesRouting),

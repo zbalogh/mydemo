@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
-import {ReactiveSearchInputComponent} from "../rx-search-input/rx-search-input.component";
+import {ReactiveSearchInputComponent} from "./rx-search-input/rx-search-input.component";
 
 /*
  * the common and shared module which is used by overall in the application.
