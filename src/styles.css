@@ -22,3 +22,16 @@ nav a:hover {
 nav a.active {
   color: #039be5;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}
+.cursor-croshair {
+  cursor: crosshair;
+}
+.cursor-eresize {
+  cursor: e-resize;
+}
+.cursor-move {
+  cursor: move;
+}

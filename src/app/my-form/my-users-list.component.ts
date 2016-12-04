@@ -22,7 +22,7 @@ import {User} from "./user.model";
               </thead>
               
               <tbody>
-                  <tr *ngFor="let user of userslist">
+                  <tr *ngFor="let user of userslist | orderBy : [+'userid']">
                       <td>{{user.userid}}</td>
                       <td>{{user.firstname}}</td>
                       <td>{{user.lastname}}</td>

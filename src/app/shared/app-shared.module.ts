@@ -4,6 +4,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import {ReactiveSearchInputComponent} from "./rx-search-input/rx-search-input.component";
 import {OrderByPipe} from "./pipes/orderby.pipe";
+import {GridListComponent} from "./grid-list/grid-list.component";
 
 /*
  * the common and shared module which is used by overall in the application.
@@ -13,7 +14,8 @@ import {OrderByPipe} from "./pipes/orderby.pipe";
 @NgModule({
   declarations: [
     ReactiveSearchInputComponent,
-    OrderByPipe
+    OrderByPipe,
+    GridListComponent
   ],
   imports: [
     // required modules from angular2 library
@@ -23,7 +25,8 @@ import {OrderByPipe} from "./pipes/orderby.pipe";
   ],
   exports : [
     ReactiveSearchInputComponent,
-    OrderByPipe
+    OrderByPipe,
+    GridListComponent
   ],
   providers: [
   ]

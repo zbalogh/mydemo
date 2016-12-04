@@ -16,7 +16,13 @@ import {Message} from "./message.model";
         <br><br>
         
         <div align="center" class="row col-sm-10">
-           <messages-list [messages]="messageList" [orderByColumns]="['+datetime', 'sender']" (deleteMessage)="onDeleteMessage($event)"></messages-list>
+           <grid-list [columns]="columns" 
+                      [data]="messageList" 
+                      [orderByColumns]="['+datetime']" 
+                      [showSelectButton]="false" 
+                      [showDeleteButton]="true"
+                      (deleteItem)="onDeleteMessage($event)">
+            </grid-list>
         </div>
         <br>
         
@@ -30,6 +36,25 @@ export class MessagesViewComponent implements OnInit {
 
   // list of users which will be shown
   messageList : Message[];
+
+  columns : any[] = [
+    {
+      id : 'id',
+      label : '#ID'
+    },
+    {
+      id : 'subject',
+      label : 'Subject'
+    },
+    {
+      id : 'sender',
+      label : 'Sender'
+    },
+    {
+      id : 'datetime',
+      label : 'Date'
+    }
+  ];
 
 
   /**
