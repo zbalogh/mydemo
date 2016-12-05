@@ -15,20 +15,23 @@ import {GridListColumn} from "./grid-list-column.model";
             </thead>
             
             <tbody>
-                <tr *ngFor="let data of dataList | orderBy : orderByColumns">
+                <tr *ngFor="let item of dataList | orderBy : orderByColumns">
                     
-                    <td *ngFor="let col of columns">{{ data[col['id']] }}</td>
+                    <td *ngFor="let col of columns">{{ showItemValueForColumn(item, col) }}</td>
                     
                     <td *ngIf="showSelectButton || showDeleteButton" nowrap>
-                        <div *ngIf="showSelectButton" class="btn btn-link" (click)="onSelectClicked(data)"><b>Select</b></div>
+                        <div *ngIf="showSelectButton" class="btn btn-link" (click)="onSelectClicked(item)"><b>Select</b></div>
                         <span *ngIf="showSelectButton && showDeleteButton">&nbsp;|&nbsp;</span>
-                        <div *ngIf="showDeleteButton" class="btn btn-link" (click)="onDeleteClicked(data)"><b>Delete</b></div>
+                        <div *ngIf="showDeleteButton" class="btn btn-link" (click)="onDeleteClicked(item)"><b>Delete</b></div>
                      </td>
                 </tr>
             </tbody>
           </table>
 `
 })
+/**
+ * An universal grid-list component to show list of data in a table
+ */
 export class GridListComponent implements OnInit {
 
   // required input
@@ -136,6 +139,17 @@ export class GridListComponent implements OnInit {
 
     // let's build up the orderBy definition as array which is used by 'orderBy' pipe
     this.orderByColumns = [ direction + columnId ];
+  }
+
+  showItemValueForColumn(item: any, col : any) : string
+  {
+      // get the column ID
+      let property = col['id'];
+
+      // get value from the item by the column ID
+      let value = item[property];
+
+      return value;
   }
 
 }

@@ -17,10 +17,17 @@ import {User} from "../my-form/user.model";
       <div class="row col-sm-2">
             <search-input placeholder="Search for users" (onSearchEvent)="onSearchUsers($event)"></search-input>
       </div>
-      <br>
+      <br><br>
       
       <div class="row col-sm-12">
-        <my-users-list [users]="userslist" (selectedUser)="onSelectedUser($event)" (deleteUser)="onDeleteUser($event)"></my-users-list>
+        <grid-list [columns]="columns"
+                   [data]="userslist"
+                   [orderByColumns]="['+userid']"
+                   [showSelectButton]="true"
+                   [showDeleteButton]="true"
+                   (selectItem)="onSelectedUser($event)"
+                   (deleteItem)="onDeleteUser($event)">
+        </grid-list>
       </div>
       <br>
     
@@ -47,6 +54,44 @@ export class UsersEditorViewComponent implements OnInit {
 
   // list of users which will be shown
   private usersList : User[];
+
+  /*
+   * column definitions for grid-list
+   */
+  columns : any[] = [
+    {
+      id : 'userid',
+      label : 'UserID'
+    },
+    {
+      id : 'firstname',
+      label : 'FirstName'
+    },
+    {
+      id : 'lastname',
+      label : 'LastName'
+    },
+    {
+      id : 'email',
+      label : 'Email'
+    },
+    {
+      id : 'telephone',
+      label : 'Telephone'
+    },
+    {
+      id : 'mobile',
+      label : 'Mobile'
+    },
+    {
+      id : 'company',
+      label : 'Company'
+    },
+    {
+      id : 'department',
+      label : 'Department'
+    }
+  ];
 
 
   /**
@@ -78,7 +123,6 @@ export class UsersEditorViewComponent implements OnInit {
    */
   get userslist() : User[]
   {
-    //return this.myUsersService.findUsers(this.searchTerm);
     return this.usersList;
   }
 
