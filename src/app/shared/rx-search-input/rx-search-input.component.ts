@@ -16,6 +16,9 @@ export class ReactiveSearchInputComponent implements OnInit {
   @Input('placeholder')
   private placeholder : string = 'Enter your search term';
 
+  @Input('initialValue')
+  private initialValue : string = '';
+
   // our own control to use input field as observable with rxJS
   private searchControl : FormControl = new FormControl('');
 
@@ -25,8 +28,14 @@ export class ReactiveSearchInputComponent implements OnInit {
   /**
    * constructor
    */
-  constructor()
+  constructor() {
+  }
+
+  ngOnInit()
   {
+    // set initial value for the input field by reset method
+    this.searchControl.reset(this.initialValue);
+
     // use our own search control as observable to get entered search value
     // subscribe to search input field to get entered value
     this.searchControl
@@ -34,8 +43,6 @@ export class ReactiveSearchInputComponent implements OnInit {
       .debounceTime(200)
       .subscribe((value) => this.sendOnSearchEvent(value) );
   }
-
-  ngOnInit() {}
 
   /**
    * notify parent component then about the entered search term

@@ -12,8 +12,14 @@ export class MyFormComponent implements OnInit {
   @Input('edit-user')
   user : User;
 
+  @Input('showCancelButton')
+  showCancelButton : boolean = false;
+
   @Output('submitted')
   submitted = new EventEmitter();
+
+  @Output('cancelled')
+  cancelled = new EventEmitter();
 
   constructor() {
     console.log('[my-form] constructor finished');
@@ -42,6 +48,11 @@ export class MyFormComponent implements OnInit {
 
     // send an event to inform the listening parent component that form has been submitted
     this.submitted.emit(this.user);
+  }
+
+  onCancel()
+  {
+    this.cancelled.emit(true);
   }
 
 }

@@ -1,6 +1,7 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, OnDestroy} from "@angular/core";
 import {MyUsersService} from "../my-form/my-users.service";
 import {User} from "../my-form/user.model";
+import {ActivatedRoute, Router} from "@angular/router";
 
 /**
  * View Component to use the components in the 'my-form' module
@@ -15,7 +16,7 @@ import {User} from "../my-form/user.model";
 
     <div [hidden]="myFormHidden">
       <div class="row col-sm-2">
-            <search-input placeholder="Search for users" (onSearchEvent)="onSearchUsers($event)"></search-input>
+            <search-input placeholder="Search for users" [initialValue]="searchTerm" (onSearchEvent)="onSearchUsers($event)"></search-input>
       </div>
       <br><br>
       
@@ -39,7 +40,9 @@ import {User} from "../my-form/user.model";
     </div>
 `
 })
-export class UsersEditorViewComponent implements OnInit {
+export class UsersEditorViewComponent implements OnInit, OnDestroy {
+
+  ROUTE_TO_USER_EDITOR_FORM : boolean = true;
 
   myFormHidden: boolean = false;
 
@@ -54,6 +57,9 @@ export class UsersEditorViewComponent implements OnInit {
 
   // list of users which will be shown
   private usersList : User[];
+
+  // queryParams subscription
+  private queryParamsSubscription : any;
 
   /*
    * column definitions for grid-list
@@ -99,20 +105,34 @@ export class UsersEditorViewComponent implements OnInit {
    *
    * @param myUsersService
    */
-  constructor(private myUsersService : MyUsersService)
+  constructor(private router: Router, private route: ActivatedRoute, private myUsersService : MyUsersService)
   {
     // initialize the usersList array
     this.usersList = [];
+
+    this.queryParamsSubscription = this.route.queryParams.subscribe(
+      params => {
+        // get 'q' query parameter or empty if no parameter
+        this.searchTerm = params['q'] || '';
+      }
+    );
 
     console.log('[users-editor-view] constructor finished');
   }
 
   ngOnInit()
   {
-    // when initializing this component then we get all users from the service
-    this.getAllUsers();
+    console.log('[users-editor-view] finding users with search term: q=' + this.searchTerm);
+
+    // when initializing this component then we get users from the service with the given search term
+    this.findUsers(this.searchTerm);
 
     console.log('[users-editor-view] ngOnInit finished');
+  }
+
+  ngOnDestroy()
+  {
+    this.queryParamsSubscription.unsubscribe();
   }
 
 
@@ -142,12 +162,16 @@ export class UsersEditorViewComponent implements OnInit {
     return newUser;
   }
 
-  onClickAddUser()
-  {
+  onClickAddUser() {
     // first create a new empty user object, which will be assigned to the 'selectedUser' object
     let newUser = this.createEmptyNewUser();
 
     this.selectedUser = newUser;
+
+    if (this.ROUTE_TO_USER_EDITOR_FORM) {
+        // route to the user editor form to create new user (id is zero)
+        this.router.navigate(['/users', '0']);
+    }
   }
 
   /**
@@ -224,6 +248,11 @@ export class UsersEditorViewComponent implements OnInit {
     console.log('[users-editor-view] selected user: ', user);
 
     this.selectedUser = user;
+
+    if (this.ROUTE_TO_USER_EDITOR_FORM) {
+        // route to the user editor form to edit this existing user
+        this.router.navigate(['/users', user.id]);
+    }
   }
 
   /**

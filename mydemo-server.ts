@@ -89,6 +89,19 @@ app.route(REST_BASE_URI + '/users')
 
 
 app.route(REST_BASE_URI + '/users/:id')
+  .get( (req, res) => {
+      const id = req.params.id;
+      console.log("getting user with id: ", id);
+
+      // find the user object (associated with the given ID) in the users array
+      var foundUser = _.find(userslist,
+        user => user.id == id
+      );
+
+      res.status(200).json(foundUser);
+      console.log('[rest-api] GET user by ID request');
+  })
+
   .delete((req, res) => {
       const id = req.params.id;
       console.log("deleting user with id: ", id);

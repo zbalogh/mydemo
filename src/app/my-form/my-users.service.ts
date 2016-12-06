@@ -33,6 +33,13 @@ export class MyUsersService {
     return this.http.get('/api' + '/users', {search:params}).map( (res : Response) => res.json() );
   }
 
+  public getUserById(id : number) : Observable<User>
+  {
+    console.log('getting user by id=' + id);
+
+    return this.http.get('/api' + '/users/' + id, xhrHeaders()).map( (res: Response) => res.json() );
+  }
+
   /**
    * add a new user
    *
