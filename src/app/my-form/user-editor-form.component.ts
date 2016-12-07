@@ -16,6 +16,9 @@ import {User} from "./user.model";
             <br>
 `
 })
+/**
+ * this component is used to add or update user, The component is called via direct route parameters, like: " /users/:id"
+ */
 export class UserEditorFormComponent implements OnInit, OnDestroy {
 
   // editingUser object which is used for editing via 'my-form' component

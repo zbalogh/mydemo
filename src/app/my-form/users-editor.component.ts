@@ -10,43 +10,42 @@ import {ActivatedRoute, Router} from "@angular/router";
   selector : 'users-editor-view',
 
   template : `
-    <div [hidden]="!showMyFormBtnVisible">
-        <button name="showMyFormBtn" class="btn btn-warning" (click)="onClickShowMyForm()">Show/Hide MyForm</button>
-    </div>
-
-    <div [hidden]="myFormHidden">
-      <div class="row col-sm-2">
-            <search-input placeholder="Search for users" [initialValue]="searchTerm" (onSearchEvent)="onSearchUsers($event)"></search-input>
-      </div>
-      <br><br>
-      
-      <div class="row col-sm-12">
-        <grid-list [columns]="columns"
-                   [data]="userslist"
-                   [orderByColumns]="['+userid']"
-                   [showSelectButton]="true"
-                   [showDeleteButton]="true"
-                   (selectItem)="onSelectedUser($event)"
-                   (deleteItem)="onDeleteUser($event)">
-        </grid-list>
-      </div>
-      <br>
+    <div>
+        <div class="alert alert-danger" role="alert" *ngIf="message">
+          {{ message }}
+        </div>
+            
+        <div *ngIf="showUserSearchList">
+            <div class="row col-sm-2">
+                  <search-input placeholder="Search for users" [initialValue]="searchTerm" (onSearchEvent)="onSearchUsers($event)"></search-input>
+            </div>
+            <br><br>
+            
+            <div class="row col-sm-12">
+              <grid-list [columns]="columns"
+                         [data]="userslist"
+                         [orderByColumns]="['+userid']"
+                         [showSelectButton]="true"
+                         [showDeleteButton]="true"
+                         (selectItem)="onSelectedUser($event)"
+                         (deleteItem)="onDeleteUser($event)">
+              </grid-list>
+            </div>
+            <br>
+          
+            <button name="addUserBtn" class="btn btn-success" (click)="onClickAddUser()">Add New User</button>
+        </div>
     
-      <button name="addUserBtn" class="btn btn-success" (click)="onClickAddUser()">Add New User</button>
-    
-      <div *ngIf="showUserEditorForm">
-          <my-form [edit-user]="selectedUser" (submitted)="onMyFormSubmitted($event)"></my-form>
-      </div>
+        <div *ngIf="showUserEditorForm">
+            <my-form [edit-user]="selectedUser" [showCancelButton]="true" (submitted)="onMyFormSubmitted($event)" (cancelled)="onMyFormCancelled($event)"></my-form>
+        </div>
     </div>
 `
 })
 export class UsersEditorViewComponent implements OnInit, OnDestroy {
 
+  // a flag to turn on/off routing to user editor component with angular routing mechanism
   ROUTE_TO_USER_EDITOR_FORM : boolean = true;
-
-  myFormHidden: boolean = false;
-
-  showMyFormBtnVisible: boolean = false;
 
   // selectedUser object which is used for editing via 'my-form' component
   // as default we initialize it with NULL value
@@ -60,6 +59,9 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
 
   // queryParams subscription
   private queryParamsSubscription : any;
+
+  // message displayed after user submit
+  message : string;
 
   /*
    * column definitions for grid-list
@@ -146,10 +148,29 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
     return this.usersList;
   }
 
+  /**
+   * if user is selected then show user editor form panel
+   *
+   * @returns {boolean}
+   */
   get showUserEditorForm() : boolean
   {
     if (this.selectedUser != null) {
       // if the 'selectedUser' is neither null nor undefined then we return true
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * if no user selected to add or edit then display search and list panels
+   *
+   * @returns {boolean}
+   */
+  get showUserSearchList() : boolean
+  {
+    if (this.selectedUser == null) {
+      // if no 'selectedUser' then show search and list panels
       return true;
     }
     return false;
@@ -175,14 +196,6 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * toogle function to show/hidden the my-form component
-   */
-  onClickShowMyForm()
-  {
-    this.myFormHidden = !this.myFormHidden;
-  }
-
-  /**
    * callback method to handle even received from the 'my-form' component when the selectedUser editor form has been submitted
    *
    * @param event
@@ -201,9 +214,6 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
           },
           err => this.handleReceivedError(err)
       );
-
-      // refresh the list of users by the current/actual search term
-      this.findUsers(this.searchTerm);
     }
     else {
       // add new user
@@ -223,6 +233,12 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
       // update the selectedUser reference
       this.selectedUser = newUser;
 
+      this.message = 'New user successfully created';
+
+      // set timeout to clear message after a few seconds
+      this.activateMessageClearingTimeout();
+
+      // TODO: maybe we can deactivate the search here, and only trigger search when close user editor form by cancel button
       // refresh the list of users by the current/actual search term
       this.findUsers(this.searchTerm);
   }
@@ -234,8 +250,42 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
       // update the selectedUser reference
       this.selectedUser = updatedUser;
 
+      this.message = 'User successfully updated';
+
+      // set timeout to clear message after a few seconds
+      this.activateMessageClearingTimeout();
+
+      // TODO: maybe we can deactivate the search here, and only trigger search when close user editor form by cancel button
       // refresh the list of users by the current/actual search term
       this.findUsers(this.searchTerm);
+  }
+
+  /**
+   * clear message after a few seconds
+   */
+  activateMessageClearingTimeout()
+  {
+    // set timeout to clear message after a few seconds
+    setTimeout(function() {
+      this.message = '';
+    }.bind(this), 3000);
+  }
+
+  /**
+   * Cancel button clicked. We received event from the form component
+   *
+   * @param event
+   */
+  onMyFormCancelled(event)
+  {
+    console.log('[users-editor-view] The user form has been cancelled/closed.');
+
+    // user editor form has been cancelled/closed
+    // set null to 'selectedUser' to display again the search and list panels
+    this.selectedUser = null;
+
+    // refresh the list of users by the current/actual search term
+    this.findUsers(this.searchTerm);
   }
 
   /**
