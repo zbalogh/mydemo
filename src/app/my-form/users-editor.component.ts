@@ -27,6 +27,7 @@ import {ActivatedRoute, Router} from "@angular/router";
                          [orderByColumns]="['+userid']"
                          [showSelectButton]="true"
                          [showDeleteButton]="true"
+                         [confirmDelete]="true"
                          (selectItem)="onSelectedUser($event)"
                          (deleteItem)="onDeleteUser($event)">
               </grid-list>

@@ -22,13 +22,16 @@ import {GridListColumn} from "./grid-list-column.model";
                     <td *ngIf="showSelectButton || showDeleteButton" nowrap>
                         <div *ngIf="showSelectButton" class="btn btn-link" (click)="onSelectClicked(item)"><b>Select</b></div>
                         <span *ngIf="showSelectButton && showDeleteButton">&nbsp;|&nbsp;</span>
-                        <div *ngIf="showDeleteButton" class="btn btn-link" (click)="onDeleteClicked(item)"><b>Delete</b></div>
+                        <div *ngIf="showDeleteButton" class="btn btn-link" [confirm]="onDeleteConfirmed" [component]="this" [data]="item" [active]="confirmDelete" [confirmMessage]="deleteConfirmMessage"><b>Delete</b></div>
                      </td>
                 </tr>
             </tbody>
           </table>
 `
 })
+
+// (click)="onDeleteClicked(item)"
+
 /**
  * An universal grid-list component to show list of data in a table
  */
@@ -54,11 +57,18 @@ export class GridListComponent implements OnInit {
   @Input('showDeleteButton')
   showDeleteButton : boolean = true;
 
+  // optional input
+  @Input('confirmDelete')
+  confirmDelete : boolean = true;
+
   @Output('selectItem')
   selectItemEvent : EventEmitter<any> = new EventEmitter<any>();
 
   @Output('deleteItem')
   deleteItemEvent : EventEmitter<any> = new EventEmitter<any>();
+
+  // confirm message for delete operation
+  deleteConfirmMessage : string = "Are you sure you want to delete this item?";
 
   /*
    * stores the actual/current column 'id' which is used for sorting when click on a column in the table header
@@ -108,6 +118,19 @@ export class GridListComponent implements OnInit {
     console.log('[grid-list] sending deleteItem event: ', item);
 
     this.deleteItemEvent.emit(item);
+  }
+
+  /**
+   * callback method which is used for 'confirm' directive.
+   * the directive executes this method with 'component' and 'data' parameters
+   * which are specified in the template.
+   *
+   * @param component
+   * @param item
+   */
+  onDeleteConfirmed(component : GridListComponent, data : any)
+  {
+      component.onDeleteClicked(data);
   }
 
   /**

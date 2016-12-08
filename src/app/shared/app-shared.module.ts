@@ -5,6 +5,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ReactiveSearchInputComponent} from "./rx-search-input/rx-search-input.component";
 import {OrderByPipe} from "./pipes/orderby.pipe";
 import {GridListComponent} from "./grid-list/grid-list.component";
+import {ConfirmDirective} from "./directives/confirm.directive";
 
 /*
  * the common and shared module which is used by overall in the application.
@@ -15,7 +16,8 @@ import {GridListComponent} from "./grid-list/grid-list.component";
   declarations: [
     ReactiveSearchInputComponent,
     OrderByPipe,
-    GridListComponent
+    GridListComponent,
+    ConfirmDirective
   ],
   imports: [
     // required modules from angular2 library
@@ -26,7 +28,8 @@ import {GridListComponent} from "./grid-list/grid-list.component";
   exports : [
     ReactiveSearchInputComponent,
     OrderByPipe,
-    GridListComponent
+    GridListComponent,
+    ConfirmDirective
   ],
   providers: [
   ]
