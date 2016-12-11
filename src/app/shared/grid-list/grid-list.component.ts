@@ -9,7 +9,7 @@ import {ConfirmationService} from "primeng/components/common/api";
           <table align="center" class="table table-hover table-bordered table-striped">
               <thead>
                 <tr>
-                    <th *ngFor="let col of columns" class="cursor-pointer" (click)="sortListByColumn(col['id'])">{{ col['label'] }}</th>
+                    <th *ngFor="let col of columns" class="cursor-pointer" pTooltip="Order by {{ col['label'] }}" tooltipPosition="top" (click)="sortListByColumn(col['id'])">{{ col['label'] }}</th>
                     
                     <th *ngIf="showSelectButton || showDeleteButton">&nbsp;</th>
                 </tr>

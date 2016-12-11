@@ -2,7 +2,9 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+
 import {ConfirmDialogModule, ConfirmationService} from 'primeng/primeng';
+import {TooltipModule} from 'primeng/primeng';
 
 import {ReactiveSearchInputComponent} from "./rx-search-input/rx-search-input.component";
 import {OrderByPipe} from "./pipes/orderby.pipe";
@@ -29,7 +31,8 @@ import {ConfirmDirective} from "./directives/confirm.directive";
     // angular bootstrap UI
     NgbModule,
     // NgPrime UI
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    TooltipModule
   ],
   exports : [
     ReactiveSearchInputComponent,

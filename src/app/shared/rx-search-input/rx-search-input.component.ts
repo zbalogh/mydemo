@@ -9,7 +9,8 @@ import {FormControl} from "@angular/forms";
 @Component({
   selector : 'search-input',
 
-  template : `<input type="text" class="form-control" [formControl]="searchControl" #searchInput (keyup.enter)="sendOnSearchEvent(searchInput.value)" placeholder="{{placeholder}}" />`
+  template : `<input type="text" class="form-control" pTooltip="{{placeholder}}" tooltipPosition="top" 
+                [formControl]="searchControl" #searchInput (keyup.enter)="sendOnSearchEvent(searchInput.value)" placeholder="{{placeholder}}" />`
 })
 export class ReactiveSearchInputComponent implements OnInit {
 
