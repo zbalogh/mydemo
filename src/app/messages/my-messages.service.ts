@@ -57,4 +57,18 @@ export class MyMessagesService {
     return result;
   }
 
+  /**
+   * Delete the given message
+   *
+   * @param message
+   */
+  public deleteMessage(message : Message) : void
+  {
+      // get index for the given message in the array
+      let index = this.messages.indexOf(message);
+
+      // remove the message object from array
+      this.messages.splice(index, 1);
+  }
+
 }

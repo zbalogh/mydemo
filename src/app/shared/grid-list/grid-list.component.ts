@@ -118,7 +118,7 @@ export class GridListComponent implements OnInit {
   /**
    * handler method when Delete link is clicked. Send event to the parent with the deleting item.
    *
-   * @param msg
+   * @param item
    */
   onDeleteClicked(item : any) : void
   {
@@ -133,24 +133,38 @@ export class GridListComponent implements OnInit {
    * which are specified in the template.
    *
    * @param component
-   * @param item
+   * @param data
    */
   onDeleteConfirmed(component : GridListComponent, data : any) : void
   {
       component.onDeleteClicked(data);
   }
 
+  /**
+   * confirm method which shows NgPrime Confirm Dialog before the delete process
+   *
+   * @param item
+   */
   ngPrimeConfirm(item : any) : void
   {
-    this.confirmationService.confirm({
-        message: this.deleteConfirmMessage,
-        header: 'Delete Confirmation',
-        icon: 'fa fa-trash',
-        accept: () => {
+    if (this.confirmDelete) {
+        // confirm is necessary before the delete process
+        this.confirmationService.confirm({
+          message: this.deleteConfirmMessage,
+          header: 'Delete Confirmation',
+          icon: 'fa fa-trash',
+          accept: () => {
             // when select 'yes' then execute the delete method
             this.onDeleteClicked(item);
-        }
-    });
+          }
+        });
+    }
+    else {
+        // no confirm necessary before the delete process,
+        // we execute delete without any confirm
+        this.onDeleteClicked(item);
+    }
+
   }
 
   /**

@@ -117,6 +117,12 @@ export class MessagesViewComponent implements OnInit {
   onDeleteMessage(msg : Message) : void
   {
     console.log('[messages-view] deleting message: ', msg);
+
+    // delete the selected message
+    this.messageService.deleteMessage(msg);
+
+    // after the deletion let's update the 'messageList' and it will refresh the list on the GUI
+    this.findMessages(this.searchTerm);
   }
 
 }
