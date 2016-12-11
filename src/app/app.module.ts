@@ -4,6 +4,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {CommonModule} from "@angular/common";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 import "rxjs/Rx";
 
@@ -25,6 +26,8 @@ import { AppComponent } from './app.component';
     // required modules from angular2 library
     BrowserModule,
     CommonModule,
+    // Angular Bootstrap
+    NgbModule.forRoot(),
     // my modules in the application
     AppRoutingModule,
     AppPagesModule

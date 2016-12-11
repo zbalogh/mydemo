@@ -1,6 +1,8 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {ConfirmDialogModule, ConfirmationService} from 'primeng/primeng';
 
 import {ReactiveSearchInputComponent} from "./rx-search-input/rx-search-input.component";
 import {OrderByPipe} from "./pipes/orderby.pipe";
@@ -23,7 +25,11 @@ import {ConfirmDirective} from "./directives/confirm.directive";
     // required modules from angular2 library
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    // angular bootstrap UI
+    NgbModule,
+    // NgPrime UI
+    ConfirmDialogModule
   ],
   exports : [
     ReactiveSearchInputComponent,
@@ -32,6 +38,8 @@ import {ConfirmDirective} from "./directives/confirm.directive";
     ConfirmDirective
   ],
   providers: [
+    // dependency for NgPrime ConfirmDialogModule
+    ConfirmationService
   ]
 })
 export class AppSharedModule {

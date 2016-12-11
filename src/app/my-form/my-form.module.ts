@@ -10,6 +10,7 @@ import {UsersEditorViewComponent} from "./users-editor.component";
 import {UserEditorFormComponent} from "./user-editor-form.component";
 import {MyAuthenticationGuard} from "../authentication/app-auth-guard";
 import {AppSharedModule} from "../shared/app-shared.module";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 /**
  * defines the routing only for this module.
@@ -37,6 +38,7 @@ const myUsersRouting = [
     CommonModule,
     FormsModule,
     HttpModule,
+    NgbModule,
     AppSharedModule
   ],
   exports : [

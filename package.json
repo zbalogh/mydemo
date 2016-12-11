@@ -20,9 +20,12 @@
     "@angular/platform-browser": "~2.1.2",
     "@angular/platform-browser-dynamic": "~2.1.2",
     "@angular/router": "~3.1.2",
+    "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.14",
     "@types/jasmine": "^2.5.37",
     "@types/node": "^6.0.46",
     "core-js": "^2.4.1",
+    "font-awesome": "^4.7.0",
+    "primeng": "^1.0.1",
     "rxjs": "5.0.0-beta.12",
     "ts-helpers": "^1.1.2",
     "zone.js": "^0.6.26"

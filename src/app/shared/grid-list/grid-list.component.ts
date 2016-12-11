@@ -1,5 +1,6 @@
 import {OnInit, Component, Input, EventEmitter, Output} from "@angular/core";
 import {GridListColumn} from "./grid-list-column.model";
+import {ConfirmationService} from "primeng/components/common/api";
 
 @Component({
   selector : 'grid-list',
@@ -22,15 +23,21 @@ import {GridListColumn} from "./grid-list-column.model";
                     <td *ngIf="showSelectButton || showDeleteButton" nowrap>
                         <div *ngIf="showSelectButton" class="btn btn-link" (click)="onSelectClicked(item)"><b>Select</b></div>
                         <span *ngIf="showSelectButton && showDeleteButton">&nbsp;|&nbsp;</span>
-                        <div *ngIf="showDeleteButton" class="btn btn-link" [confirm]="onDeleteConfirmed" [component]="this" [data]="item" [active]="confirmDelete" [confirmMessage]="deleteConfirmMessage"><b>Delete</b></div>
+                        <div *ngIf="showDeleteButton" class="btn btn-link" (click)="ngPrimeConfirm(item)"><b>Delete</b></div>
                      </td>
                 </tr>
             </tbody>
           </table>
+          
+          <p-confirmDialog width="425"></p-confirmDialog>
 `
 })
 
-// (click)="onDeleteClicked(item)"
+// simple Delete without any confirmation
+// <div *ngIf="showDeleteButton" class="btn btn-link" (click)="onDeleteClicked(item)"><b>Delete</b></div>
+
+// Delete with my own confirm directive
+// <div *ngIf="showDeleteButton" class="btn btn-link" [confirm]="onDeleteConfirmed" [component]="this" [data]="item" [active]="confirmDelete" [confirmMessage]="deleteConfirmMessage"><b>Delete</b></div>
 
 /**
  * An universal grid-list component to show list of data in a table
@@ -83,7 +90,7 @@ export class GridListComponent implements OnInit {
   /**
    * constructor of this component
    */
-  constructor()
+  constructor(private confirmationService: ConfirmationService)
   {
     // initialize with empty array
     this.dataList = [];
@@ -128,9 +135,22 @@ export class GridListComponent implements OnInit {
    * @param component
    * @param item
    */
-  onDeleteConfirmed(component : GridListComponent, data : any)
+  onDeleteConfirmed(component : GridListComponent, data : any) : void
   {
       component.onDeleteClicked(data);
+  }
+
+  ngPrimeConfirm(item : any) : void
+  {
+    this.confirmationService.confirm({
+        message: this.deleteConfirmMessage,
+        header: 'Delete Confirmation',
+        icon: 'fa fa-trash',
+        accept: () => {
+            // when select 'yes' then execute the delete method
+            this.onDeleteClicked(item);
+        }
+    });
   }
 
   /**
