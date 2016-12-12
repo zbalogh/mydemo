@@ -68,7 +68,23 @@
     <div class="row form-group">
       <label class="control-label col-sm-3" for="department">Department:</label>
       <div class="col-sm-4">
-        <input class="form-control" name="department" id="department" placeholder="Enter a department..." [ngModel]="user.department">
+        <p-dropdown name="department" id="department" [style]="{'width':'300px'}" [options]="departmentList" [(ngModel)]="user.department"></p-dropdown>
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <label class="control-label col-sm-3" for="rolesAssign">Roles Assignment:</label>
+      <div class="col-sm-4">
+        <p-pickList id="rolesAssign" [responsive]="true" [source]="availableRoles" [target]="assignedRoles"
+            sourceHeader="Available" targetHeader="Assigned" [showSourceControls]="false" [showTargetControls]="false"
+            [sourceStyle]="{'height':'200px'}" [targetStyle]="{'height':'200px'}">
+            <!-- template for the pick-list elements -->
+            <template let-role>
+              <div class="ui-helper-clearfix">
+                <div style="font-size:16px; float:left; margin:15px 5px 0 0">{{role.label}}</div>
+              </div>
+            </template>
+        </p-pickList>
       </div>
     </div>
 

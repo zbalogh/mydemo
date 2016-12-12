@@ -1,6 +1,8 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 
+import {ChartModule} from 'primeng/primeng';
+
 /*
  * pages/views which are not used as lazy loading. it loaded with app/root module
  */
@@ -22,6 +24,8 @@ import {PageNotFoundComponent} from "./page-not-found.component";
   imports: [
     // required modules from angular2 library
     CommonModule,
+    // NgPrime UI
+    ChartModule
   ],
   exports : [
     AboutViewComponent,

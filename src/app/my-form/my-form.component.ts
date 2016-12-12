@@ -1,6 +1,7 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {User} from "./user.model";
 import {NgForm} from "@angular/forms";
+import {SelectItem} from "primeng/components/common/api";
 
 @Component({
   selector: 'my-form',
@@ -21,7 +22,33 @@ export class MyFormComponent implements OnInit {
   @Output('cancelled')
   cancelled = new EventEmitter();
 
-  constructor() {
+  // list of departments which will be used for the dropdown component
+  departmentList : SelectItem[];
+
+  // available and assigned roles which will be used for PickList component
+  availableRoles : UserRoleItem[];
+  assignedRoles  : UserRoleItem[];
+
+  constructor()
+  {
+    // initialize department array with data
+    this.departmentList = [];
+    this.departmentList.push({label: 'None', value: ''});
+    this.departmentList.push({label: 'Accounting', value: 'Accounting'});
+    this.departmentList.push({label: 'Development', value: 'Development'});
+    this.departmentList.push({label: 'Logistics', value: 'Logistics'});
+    this.departmentList.push({label: 'Sales', value: 'Sales'});
+
+    // initialize roles array
+    this.assignedRoles = [];
+    this.availableRoles = [];
+
+    // add roles into the available roles
+    this.availableRoles.push({ label: "Administrator", value: "administrator" });
+    this.availableRoles.push({ label: "Standard User", value: "standard_user" });
+    this.availableRoles.push({ label: "Restricted User", value: "restricted_user" });
+    this.availableRoles.push({ label: "Guest", value: "guest" });
+
     console.log('[my-form] constructor finished');
   }
 
@@ -55,4 +82,13 @@ export class MyFormComponent implements OnInit {
     this.cancelled.emit(true);
   }
 
+}
+
+/**
+ * class for user role
+ */
+class UserRoleItem
+{
+  label: string;
+  value: string;
 }

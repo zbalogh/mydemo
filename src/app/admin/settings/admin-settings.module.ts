@@ -4,6 +4,8 @@ import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 
+import {TabViewModule} from 'primeng/primeng';
+
 import {AppSharedModule} from "../../shared/app-shared.module";
 
 import {MyAuthenticationGuard} from "../../authentication/app-auth-guard";
@@ -29,6 +31,7 @@ const adminSettingsRouting = [
     CommonModule,
     FormsModule,
     HttpModule,
+    TabViewModule,
     AppSharedModule
   ],
   exports: [

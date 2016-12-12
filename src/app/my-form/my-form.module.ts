@@ -10,7 +10,11 @@ import {UsersEditorViewComponent} from "./users-editor.component";
 import {UserEditorFormComponent} from "./user-editor-form.component";
 import {MyAuthenticationGuard} from "../authentication/app-auth-guard";
 import {AppSharedModule} from "../shared/app-shared.module";
+
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+
+import {DropdownModule} from 'primeng/primeng';
+import {PickListModule} from 'primeng/primeng';
 
 /**
  * defines the routing only for this module.
@@ -38,7 +42,12 @@ const myUsersRouting = [
     CommonModule,
     FormsModule,
     HttpModule,
+    // Angular Bootstrap UI
     NgbModule,
+    // NgPrime UI
+    DropdownModule,
+    PickListModule,
+    // our own shared module
     AppSharedModule
   ],
   exports : [
