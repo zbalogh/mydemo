@@ -3,6 +3,9 @@ import {MyUsersService} from "../my-form/my-users.service";
 import {User} from "../my-form/user.model";
 import {ActivatedRoute, Router} from "@angular/router";
 
+import {SelectItem} from "primeng/components/common/api";
+import {UserRoleItem} from "./user-role.model";
+
 /**
  * View Component to use the components in the 'my-form' module
  */
@@ -36,7 +39,7 @@ import {ActivatedRoute, Router} from "@angular/router";
         </div>
     
         <div *ngIf="showUserEditorForm">
-            <my-form [edit-user]="selectedUser" [showCancelButton]="true" (submitted)="onMyFormSubmitted($event)" (cancelled)="onMyFormCancelled($event)"></my-form>
+            <my-form [edit-user]="selectedUser" [showCancelButton]="true" [departmentList]="departmentList" [availableRoles]="availableRoles" (submitted)="onMyFormSubmitted($event)" (cancelled)="onMyFormCancelled($event)"></my-form>
         </div>
     </div>
 `
@@ -61,6 +64,9 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
 
   // message displayed after user submit
   message : string;
+
+  departmentList : SelectItem[];
+  availableRoles : UserRoleItem[];
 
   /*
    * column definitions for grid-list
@@ -175,12 +181,44 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
     return false;
   }
 
+
   createEmptyNewUser() : User
   {
     let newUser = new User();
 
+    // get user dependencies
+    this.getUserDependencies(newUser);
+
     return newUser;
   }
+
+
+  /**
+   * get or update user dependencies
+   *
+   * @param user
+   */
+  private getUserDependencies(user : User)
+  {
+    // get list of all departments which will be shown in the dropdown
+    this.getDepartmentList();
+
+    // get list of available roles depends on user already assigned roles
+    this.getAvailableUserRoles(user);
+  }
+
+  private getDepartmentList()
+  {
+    // get list of departments from the service
+    this.departmentList = this.myUsersService.getDepartmentList();
+  }
+
+  private getAvailableUserRoles(user : User)
+  {
+    // get list of available roles from the service
+    this.availableRoles = this.myUsersService.getAvailableUserRoles(user);
+  }
+
 
   onClickAddUser() {
     // first create a new empty user object, which will be assigned to the 'selectedUser' object
@@ -193,6 +231,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
         this.router.navigate(['/users', '0']);
     }
   }
+
 
   /**
    * callback method to handle even received from the 'my-form' component when the selectedUser editor form has been submitted
@@ -229,6 +268,9 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
   {
       console.log('[users-editor-view] addUser() response OK | ', newUser);
 
+      // get user dependencies
+      this.getUserDependencies(newUser);
+
       // update the selectedUser reference
       this.selectedUser = newUser;
 
@@ -245,6 +287,9 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
   handleSuccessUserUpdate(updatedUser : User)
   {
       console.log('[users-editor-view] updateUser() response OK | ', updatedUser);
+
+      // get user dependencies
+      this.getUserDependencies(updatedUser);
 
       // update the selectedUser reference
       this.selectedUser = updatedUser;
@@ -295,6 +340,9 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
   onSelectedUser(user : User)
   {
     console.log('[users-editor-view] selected user: ', user);
+
+    // get user dependencies
+    this.getUserDependencies(user);
 
     this.selectedUser = user;
 

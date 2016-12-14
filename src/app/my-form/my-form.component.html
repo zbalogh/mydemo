@@ -75,7 +75,7 @@
     <div class="row form-group">
       <label class="control-label col-sm-3" for="rolesAssign">Roles Assignment:</label>
       <div class="col-sm-4">
-        <p-pickList id="rolesAssign" [responsive]="true" [source]="availableRoles" [target]="assignedRoles"
+        <p-pickList id="rolesAssign" [responsive]="true" [source]="availableRoles" [target]="user.assignedRoles"
             sourceHeader="Available" targetHeader="Assigned" [showSourceControls]="false" [showTargetControls]="false"
             [sourceStyle]="{'height':'200px'}" [targetStyle]="{'height':'200px'}">
             <!-- template for the pick-list elements -->

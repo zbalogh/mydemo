@@ -1,3 +1,4 @@
+import {UserRoleItem} from "./user-role.model";
 /**
  * A simple model bean represents an user object
  */
@@ -22,5 +23,7 @@ export class User {
   company : string = "";
 
   department : string = "";
+
+  assignedRoles  : UserRoleItem[] = [];
 
 }

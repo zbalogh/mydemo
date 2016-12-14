@@ -2,6 +2,8 @@ import {OnDestroy, OnInit, Component} from "@angular/core";
 import {Router, ActivatedRoute} from "@angular/router";
 import {MyUsersService} from "./my-users.service";
 import {User} from "./user.model";
+import {SelectItem} from "primeng/components/common/api";
+import {UserRoleItem} from "./user-role.model";
 
 @Component({
   selector : 'user-editor',
@@ -9,7 +11,7 @@ import {User} from "./user.model";
   template : `
             <ngb-alert *ngIf="message" type="success" [dismissible]="false">{{ message }}</ngb-alert>
             
-            <my-form [edit-user]="editingUser" [showCancelButton]="true" (submitted)="onMyFormSubmitted($event)" (cancelled)="onMyFormCancelled($event)"></my-form>
+            <my-form [edit-user]="editingUser" [showCancelButton]="true" [departmentList]="departmentList" [availableRoles]="availableRoles" (submitted)="onMyFormSubmitted($event)" (cancelled)="onMyFormCancelled($event)"></my-form>
             
             <br>
 `
@@ -28,6 +30,9 @@ export class UserEditorFormComponent implements OnInit, OnDestroy {
   // message displayed after user submit
   message : string;
 
+  departmentList : SelectItem[];
+  availableRoles : UserRoleItem[];
+
   /**
    * constructor of this component
    *
@@ -37,6 +42,7 @@ export class UserEditorFormComponent implements OnInit, OnDestroy {
   {
     // initialize with empty user object
     this.editingUser = new User();
+
     console.log('[user-editor-form] constructor finished');
   }
 
@@ -54,6 +60,9 @@ export class UserEditorFormComponent implements OnInit, OnDestroy {
             else {
               // id is zero. it is a new user creation
               console.log('[user-editor-form] id parameter value is zero. This is the new user creation.');
+
+              // create and init a new user object with his dependencies
+              this.initNewUser();
             }
         }
     );
@@ -76,11 +85,57 @@ export class UserEditorFormComponent implements OnInit, OnDestroy {
       this.myUsersService.getUserById(id).subscribe(
           user => {
             // received user object from REST request
+            //
+            // get user dependencies
+            this.getUserDependencies(user);
+
             // set the 'editingUser' variable
             this.editingUser = user;
+
             console.log('[user-editor-form] received user from REST service by id=' + id);
           }
       );
+  }
+
+  /**
+   * if open this form as "add new user" then we create a new user object
+   */
+  initNewUser()
+  {
+    // create a new instance of User object
+    let user = new User();
+
+    // get user dependencies
+    this.getUserDependencies(user);
+
+    // set the 'editingUser' variable
+    this.editingUser = user;
+  }
+
+  /**
+   * get or update user dependencies
+   *
+   * @param user
+   */
+  private getUserDependencies(user : User)
+  {
+    // get list of all departments which will be shown in the dropdown
+    this.getDepartmentList();
+
+    // get list of available roles depends on user already assigned roles
+    this.getAvailableUserRoles(user);
+  }
+
+  private getDepartmentList()
+  {
+    // get list of departments from the service
+   this.departmentList = this.myUsersService.getDepartmentList();
+  }
+
+  private getAvailableUserRoles(user : User)
+  {
+    // get list of available roles from the service
+    this.availableRoles = this.myUsersService.getAvailableUserRoles(user);
   }
 
 
@@ -119,6 +174,8 @@ export class UserEditorFormComponent implements OnInit, OnDestroy {
   {
       console.log('[user-editor-form] addUser() response OK | ', newUser);
 
+      this.getUserDependencies(newUser);
+
       // update the editingUser reference
       this.editingUser = newUser;
 
@@ -131,6 +188,8 @@ export class UserEditorFormComponent implements OnInit, OnDestroy {
   handleSuccessUserUpdate(updatedUser : User)
   {
       console.log('[user-editor-form] updateUser() response OK | ', updatedUser);
+
+      this.getUserDependencies(updatedUser);
 
       // update the editingUser reference
       this.editingUser = updatedUser;

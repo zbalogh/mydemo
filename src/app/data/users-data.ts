@@ -10,7 +10,11 @@ export const USER_DATA = [
     telephone : '634',
     mobile : '+36205568595',
     company : 'Andtek GmbH',
-    department : 'Development'
+    department : 'Development',
+    assignedRoles : [
+      { label: "Administrator", value: "administrator" },
+      { label: "Standard User", value: "standard_user" }
+    ]
   },
 
   {
@@ -22,7 +26,10 @@ export const USER_DATA = [
     telephone : '632',
     mobile : '',
     company : 'Andtek GmbH',
-    department : 'Development'
+    department : 'Development',
+    assignedRoles : [
+      { label: "Standard User", value: "standard_user" }
+    ]
   },
 
   {
@@ -34,7 +41,10 @@ export const USER_DATA = [
     telephone : '636',
     mobile : '',
     company : 'Andtek GmbH',
-    department : 'Development'
+    department : 'Development',
+    assignedRoles : [
+      { label: "Standard User", value: "standard_user" }
+    ]
   }
 
 ];
