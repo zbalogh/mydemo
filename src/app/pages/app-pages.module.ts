@@ -1,5 +1,6 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 import {ChartModule} from 'primeng/primeng';
 
@@ -24,6 +25,8 @@ import {PageNotFoundComponent} from "./page-not-found.component";
   imports: [
     // required modules from angular2 library
     CommonModule,
+    // Angular Bootstrap UI
+    NgbModule,
     // NgPrime UI
     ChartModule
   ],

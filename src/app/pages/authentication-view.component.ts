@@ -15,10 +15,14 @@ import {Router} from "@angular/router";
         
         <br>
         
-        <div class="alert alert-danger" role="alert" *ngIf="message">
+        <!-- old style of alert -->
+        <div class="alert alert-danger" role="alert" *ngIf="false">
           {{ message }}
         </div>
-      
+        <!-- new style of alert with ng2-bootstrap -->
+        <ngb-alert *ngIf="message" type="danger" [dismissible]="false">{{ message }}</ngb-alert>
+
+        <!-- if user is not authenticated then display the login form -->
         <form class="form-inline" *ngIf="!authService.isAuthenticated()">
             <div class="form-group">
                 <label for="username">User:</label>
@@ -33,6 +37,7 @@ import {Router} from "@angular/router";
             <button type="submit" class="btn btn-success" (click)="login(username.value, password.value)">Login</button>
         </form>
       
+        <!-- if user is authenticated then display the logout button -->
         <div class="well" *ngIf="authService.isAuthenticated()">
             You are logged in as <b>{{ authService.getUser() }}</b>
             <br><br>

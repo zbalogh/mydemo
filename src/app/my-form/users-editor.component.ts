@@ -11,9 +11,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 
   template : `
     <div>
-        <div class="alert alert-danger" role="alert" *ngIf="message">
-          {{ message }}
-        </div>
+        <ngb-alert *ngIf="message" type="success" [dismissible]="false">{{ message }}</ngb-alert>
             
         <div *ngIf="showUserSearchList">
             <div class="row col-sm-2">
