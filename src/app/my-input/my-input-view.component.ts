@@ -14,7 +14,7 @@ import {Component} from "@angular/core";
         </div>
         
         <div [hidden]="myInputHidden">
-          <my-input initialValue="Zoltan Balogh" [buttonLabel]="getButtonLabel()" (enteredName)="onEnteredName($event)"></my-input>
+          <my-input [buttonLabel]="getButtonLabel()" (enteredName)="onEnteredName($event)"></my-input>
         
           <div *ngIf=" enteredName != '' ">
             Your last entered name: {{enteredName}}

@@ -68,7 +68,7 @@
     <div class="row form-group">
       <label class="control-label col-sm-3" for="department">Department:</label>
       <div class="col-sm-4">
-        <p-dropdown name="department" id="department" [style]="{'width':'300px'}" [options]="departmentList" [(ngModel)]="user.department"></p-dropdown>
+        <p-dropdown name="department" id="department" [style]="{'width':'300px'}" [options]="departmentList" [(ngModel)]="user.department" [filter]="false"></p-dropdown>
       </div>
     </div>
 
