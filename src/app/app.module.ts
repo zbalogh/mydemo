@@ -4,7 +4,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {CommonModule} from "@angular/common";
+
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {ModalModule} from "angular2-modal";
 
 import "rxjs/Rx";
 
@@ -28,6 +30,8 @@ import { AppComponent } from './app.component';
     CommonModule,
     // Angular Bootstrap
     NgbModule.forRoot(),
+    // Angular Modal
+    ModalModule.forRoot(),
     // my modules in the application
     AppRoutingModule,
     AppPagesModule

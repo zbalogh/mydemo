@@ -1,5 +1,7 @@
-import {Component, Output, Input, EventEmitter} from "@angular/core";
+import {Component, Output, Input, EventEmitter, ViewContainerRef} from "@angular/core";
 import {MyInputService} from "./my-input.service";
+import { Modal } from 'angular2-modal/plugins/bootstrap';
+import {Overlay} from "angular2-modal";
 
 @Component({
   selector : 'my-input',
@@ -19,7 +21,10 @@ import {MyInputService} from "./my-input.service";
 export class MyInputComponent {
 
   // dependency injection for MyInputService
-  constructor(private myInputService : MyInputService) {
+  constructor(private myInputService : MyInputService, private overlay: Overlay, private vcRef: ViewContainerRef, private modal: Modal)
+  {
+    // set default view container for modal overlay
+    overlay.defaultViewContainer = vcRef;
   }
 
   //internal component variable to store the entered value from the input field which defined in the template
@@ -76,7 +81,12 @@ export class MyInputComponent {
   handleEnteredValue(value : string)
   {
       if (value === '') {
-        alert("Empty is not allowed. Enter something.");
+        //alert("Empty is not allowed. Enter something.");
+        this.modal.alert()
+          .size('lg')
+          .title('Empty value')
+          .body(`<h5>Empty name is not allowed. Please enter a name.</h5>`)
+          .open();
       }
       else {
         // save the entered name
@@ -92,7 +102,30 @@ export class MyInputComponent {
    */
   onClear()
   {
-    this.myInputService.removeNames();
+    this.modal.confirm()
+      .size('lg')
+      .showClose(false)
+      .title('Do you really want to clear all collected names?')
+      .body(`<h5>If you click on 'Yes' button then all names will be removed from the collection.</h5>`)
+      .okBtn('Yes, clear')
+      .cancelBtn('Cancel')
+      //
+      // open modal
+      .open()
+      //
+      // dialog has more properties,lets just return the promise for a result.
+      .then(dialog => dialog.result)
+      //
+      // if YES button has been clicked.
+      .then(result => {
+          console.log('confirmed');
+          this.myInputService.removeNames();
+      })
+      //
+      // if it was cancelled
+      .catch(err => {
+          console.log('cancelled');
+      });
   }
 
   /**

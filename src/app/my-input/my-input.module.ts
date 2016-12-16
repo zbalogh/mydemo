@@ -5,6 +5,7 @@ import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 
 import {AutoCompleteModule} from "primeng/components/autocomplete/autocomplete";
+import {BootstrapModalModule} from "angular2-modal/plugins/bootstrap";
 
 import {MyInputComponent} from "./my-input.component";
 import {MyInputService} from "./my-input.service";
@@ -34,6 +35,8 @@ const myInputRouting = [
     CommonModule,
     FormsModule,
     HttpModule,
+    // Angular Modal Bootstrap Module
+    BootstrapModalModule,
     // PrimeNG UI
     AutoCompleteModule
   ],
