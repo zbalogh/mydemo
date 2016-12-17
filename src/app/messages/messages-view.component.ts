@@ -6,8 +6,10 @@ import {Message} from "./message.model";
   selector : 'messages-view',
 
   template : `
-      <br>
       <div align="center">
+      
+        <ngb-alert *ngIf="alertMessage" type="success" [dismissible]="false">{{ alertMessage }}</ngb-alert>
+      
         <h1>Message Center</h1>
         
         <div align="center" class="row col-sm-2">
@@ -36,6 +38,9 @@ export class MessagesViewComponent implements OnInit {
 
   // list of users which will be shown
   messageList : Message[];
+
+  // message used by ng-bootstrap alert
+  alertMessage: string;
 
   columns : any[] = [
     {
@@ -120,6 +125,14 @@ export class MessagesViewComponent implements OnInit {
 
     // delete the selected message
     this.messageService.deleteMessage(msg);
+
+    // show success message about the deletion
+    this.alertMessage = "Message has been successfully deleted.";
+
+    // set timeout to clear message after a few seconds
+    setTimeout(function() {
+      this.alertMessage = '';
+    }.bind(this), 3000);
 
     // after the deletion let's update the 'messageList' and it will refresh the list on the GUI
     this.findMessages(this.searchTerm);

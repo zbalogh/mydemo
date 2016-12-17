@@ -362,7 +362,14 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
     console.log('[users-editor-view] deleting user: ', user);
 
     this.myUsersService.deleteUser(user).subscribe(
-        res =>  console.log('[deletedUser] response OK'),
+        res =>  {
+          console.log('[deletedUser] response OK');
+
+          this.message = 'User successfully deleted';
+
+          // set timeout to clear message after a few seconds
+          this.activateMessageClearingTimeout();
+        },
         err => this.handleReceivedError(err)
     );
 

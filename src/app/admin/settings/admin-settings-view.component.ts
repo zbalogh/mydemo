@@ -4,7 +4,6 @@ import {Component} from "@angular/core";
   selector : 'admin-settings-view',
 
   template : `
-          <br>
           <div align="center">
             <h1>Your account settings</h1>
             

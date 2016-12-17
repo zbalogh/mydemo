@@ -3,6 +3,7 @@ import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {RouterModule} from "@angular/router";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 import {AppSharedModule} from "../shared/app-shared.module";
 
@@ -35,6 +36,9 @@ const myMessagesRouting = [
     CommonModule,
     FormsModule,
     HttpModule,
+    // angular bootstrap UI
+    NgbModule,
+    // import our own modules
     AppSharedModule
   ],
   exports: [
