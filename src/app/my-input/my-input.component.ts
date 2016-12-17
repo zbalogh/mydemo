@@ -41,6 +41,9 @@ export class MyInputComponent {
   @Output('enteredName')
   enteredNameEvent = new EventEmitter();
 
+  @Output('onClear')
+  clearedNamesEvent = new EventEmitter();
+
   // variable where the auto complete input field will write the value
   autoCompleteText : string = '';
 
@@ -120,6 +123,7 @@ export class MyInputComponent {
       .then(result => {
           console.log('confirmed');
           this.myInputService.removeNames();
+          this.clearedNamesEvent.emit(true);
       })
       //
       // if it was cancelled

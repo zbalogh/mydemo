@@ -6,13 +6,15 @@ import {RouterModule} from "@angular/router";
 
 import {AutoCompleteModule} from "primeng/components/autocomplete/autocomplete";
 import {BootstrapModalModule} from "angular2-modal/plugins/bootstrap";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 import {MyInputComponent} from "./my-input.component";
 import {MyInputService} from "./my-input.service";
 import {ShowNamesComponent} from "./show-names.component";
+import {MyInputViewComponent} from "./my-input-view.component";
 
 import {MyAuthenticationGuard} from "../authentication/app-auth-guard";
-import {MyInputViewComponent} from "./my-input-view.component";
+
 
 /**
 * defines the routing only for this module.
@@ -35,6 +37,8 @@ const myInputRouting = [
     CommonModule,
     FormsModule,
     HttpModule,
+    // Angular Bootstrap UI
+    NgbModule,
     // Angular Modal Bootstrap Module
     BootstrapModalModule,
     // PrimeNG UI
