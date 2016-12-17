@@ -2,8 +2,12 @@
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.17.
 
+## Install demo application
+Checkout this project or download as ZIP file. Go to the project folder in your local machine where you checked out this project. 
+Run `npm install` to install all necessary NPM packages which required by this project. Then 'node_modules' folder will be created in your project.
+
 ## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm start` for a develepoment server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Development REST service
 Run `ts-node mydemo-server.ts` for REST API service running as NodeJS HTTP server on your localhost. 
