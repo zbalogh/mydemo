@@ -17,27 +17,77 @@ import {UserRoleItem} from "./user-role.model";
         <ngb-alert *ngIf="message" type="success" [dismissible]="false">{{ message }}</ngb-alert>
             
         <div *ngIf="showUserSearchList">
+            
+            <!-- switcher input field -->
+            <p-inputSwitch [(ngModel)]="usePrimeNgDataTable"></p-inputSwitch> <b>Use PrimeNg DataTable Component</b>
+            <br><br>
+            
+            <!-- RxJS based search field -->
             <div class="row col-sm-2">
                   <search-input placeholder="Search for users" [initialValue]="searchTerm" (onSearchEvent)="onSearchUsers($event)"></search-input>
             </div>
             <br><br>
             
-            <div class="row col-sm-12">
-              <grid-list [columns]="columns"
-                         [data]="userslist"
-                         [orderByColumns]="['+userid']"
-                         [showSelectButton]="true"
-                         [showDeleteButton]="true"
-                         [confirmDelete]="true"
-                         (selectItem)="onSelectedUser($event)"
-                         (deleteItem)="onDeleteUser($event)">
-              </grid-list>
+            <!-- users list with my own grid-list component -->
+            <div *ngIf="!usePrimeNgDataTable">
+                <div class="row col-sm-12">
+                  <grid-list [columns]="columns"
+                             [data]="userslist"
+                             [orderByColumns]="['+userid']"
+                             [showSelectButton]="true"
+                             [showDeleteButton]="true"
+                             [confirmDelete]="true"
+                             (selectItem)="onSelectedUser($event)"
+                             (deleteItem)="onDeleteUser($event)">
+                  </grid-list>
+                </div>
+                <br>
+                <button name="addUserBtn" class="btn btn-success" (click)="onClickAddUser()">Add New User</button>
+                <br>
             </div>
-            <br>
-          
-            <button name="addUserBtn" class="btn btn-success" (click)="onClickAddUser()">Add New User</button>
+            
+            <!-- users list with PrimeNg data-table component -->
+            <div *ngIf="usePrimeNgDataTable">
+                <div class="row col-sm-12">
+                    <p-dataTable [value]="userslist" [(selection)]="selectedUsers" (onRowDblclick)="onRowDblclick($event)" [paginator]="true" rows="10" [responsive]="true">
+                        <header><h4>Users List</h4></header>
+                        
+                        <p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+                        <p-column styleClass="col-button" [style]="{'width':'60px'}" >
+                             <template let-user="rowData" pTemplate="body">
+                                  <button type="button" pButton (click)="onSelectedUser(user)" icon="fa-pencil-square-o"></button>
+                              </template>
+                        </p-column>
+                        
+                        <p-column field="userid" header="UserID" [sortable]="true"></p-column>
+                        <p-column field="firstname" header="FirstName" [sortable]="true"></p-column>
+                        <p-column field="lastname" header="LastName" [sortable]="true"></p-column>
+                        <p-column field="email" header="Email" [sortable]="true"></p-column>
+                        <p-column field="telephone" header="Telephone" [sortable]="true"></p-column>
+                        <p-column field="mobile" header="Mobile" [sortable]="true"></p-column>
+                        <p-column field="company" header="Company" [sortable]="true"></p-column>
+                        
+                        <p-column field="department" header="Department" [sortable]="true">
+                            <template let-col let-user="rowData" pTemplate="body">
+                                <span [style.color]="'green'">{{ user[col.field] }}</span>
+                            </template>
+                        </p-column>
+                        
+                        <footer>
+                          <div class="ui-helper-clearfix" style="width:100%">
+                            <button type="button" pButton style="float:left" (click)="onClickAddUser()" label="Add New User"></button>
+                            &nbsp;
+                            <button type="button" pButton style="float:left" (click)="onClickDeleteSelectedUsers()" label="Delete Users"></button>
+                          </div>
+                        </footer>
+                    </p-dataTable>  
+                </div>
+                <br>
+            </div>
+            
         </div>
     
+        <!-- user editor section -->
         <div *ngIf="showUserEditorForm">
             <my-form [edit-user]="selectedUser" [showCancelButton]="true" [departmentList]="departmentList" [availableRoles]="availableRoles" (submitted)="onMyFormSubmitted($event)" (cancelled)="onMyFormCancelled($event)"></my-form>
         </div>
@@ -53,6 +103,9 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
   // as default we initialize it with NULL value
   selectedUser : User = null;
 
+  // array for primeNG grid component where we collect the selected users
+  selectedUsers : User[] = [];
+
   // stores the current entered search value
   private searchTerm : string = '';
 
@@ -64,6 +117,9 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
 
   // message displayed after user submit
   message : string;
+
+  // flag to choose grid-panel component
+  usePrimeNgDataTable : boolean = true;
 
   departmentList : SelectItem[];
   availableRoles : UserRoleItem[];
@@ -353,6 +409,18 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * double click event on the PrimeNG data-table component
+   *
+   * @param event
+   */
+  onRowDblclick(event)
+  {
+    console.log('grid click event: ', event);
+    //let user : User = event.data;
+    //this.onSelectedUser(user);
+  }
+
+  /**
    * handler method when an user is selected for deleting in the list
    *
    * @param user
@@ -378,6 +446,21 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
 
     // refresh the list of users by the current/actual search term
     this.findUsers(this.searchTerm);
+  }
+
+  /**
+   * handler method for PrimeNG data-table component when clicking on 'Delete Users' button
+   */
+  onClickDeleteSelectedUsers()
+  {
+    console.log('[users-editor-view] deleting selected users: ', this.selectedUsers);
+
+    this.message = 'Currently the user deletion is not implemented in the PrimeNg DataTable component!';
+
+    // set timeout to clear message after a few seconds
+    this.activateMessageClearingTimeout();
+
+    // TODO: it needs to be implemented
   }
 
   /**

@@ -45,6 +45,51 @@ export const USER_DATA = [
     assignedRoles : [
       { label: "Standard User", value: "standard_user" }
     ]
+  },
+
+  {
+    id: 4,
+    userid : 'ftoth',
+    firstname : 'Ferenc',
+    lastname : 'Toth',
+    email : 'ftoth@andtek.com',
+    telephone : '635',
+    mobile : '',
+    company : 'Andtek GmbH',
+    department : 'Development',
+    assignedRoles : [
+      { label: "Standard User", value: "standard_user" }
+    ]
+  },
+
+  {
+    id: 5,
+    userid : 'bspencer',
+    firstname : 'Bud',
+    lastname : 'Spencer',
+    email : 'bspencer@budfilms.com',
+    telephone : '+3687650122',
+    mobile : '+36209807869',
+    company : 'Bud Films Studio',
+    department : 'Actor',
+    assignedRoles : [
+      { label: "Standard User", value: "standard_user" }
+    ]
+  },
+
+  {
+    id: 6,
+    userid : 'mhammon',
+    firstname : 'Mark',
+    lastname : 'Hammon',
+    email : 'mhammon@cars.com',
+    telephone : '+3622345670',
+    mobile : '36701264065',
+    company : 'Car Industry Ltd.',
+    department : 'Sales',
+    assignedRoles : [
+      { label: "Guest", value: "guest" }
+    ]
   }
 
 ];

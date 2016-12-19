@@ -15,6 +15,9 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 import {DropdownModule} from 'primeng/primeng';
 import {PickListModule} from 'primeng/primeng';
+import {DataTableModule,SharedModule} from 'primeng/primeng';
+import {ButtonModule} from "primeng/primeng";
+import {InputSwitchModule} from "primeng/primeng";
 
 /**
  * defines the routing only for this module.
@@ -47,6 +50,10 @@ const myUsersRouting = [
     // NgPrime UI
     DropdownModule,
     PickListModule,
+    DataTableModule,
+    SharedModule,
+    ButtonModule,
+    InputSwitchModule,
     // our own shared module
     AppSharedModule
   ],
