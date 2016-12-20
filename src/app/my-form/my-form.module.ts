@@ -18,6 +18,7 @@ import {PickListModule} from 'primeng/primeng';
 import {DataTableModule,SharedModule} from 'primeng/primeng';
 import {ButtonModule} from "primeng/primeng";
 import {InputSwitchModule} from "primeng/primeng";
+import {ConfirmDialogModule, ConfirmationService} from 'primeng/primeng';
 
 /**
  * defines the routing only for this module.
@@ -54,6 +55,7 @@ const myUsersRouting = [
     SharedModule,
     ButtonModule,
     InputSwitchModule,
+    ConfirmDialogModule,
     // our own shared module
     AppSharedModule
   ],
@@ -61,7 +63,9 @@ const myUsersRouting = [
     UsersEditorViewComponent
   ],
   providers: [
-    MyUsersService
+    MyUsersService,
+    // dependency for NgPrime ConfirmDialogModule
+    ConfirmationService
   ]
 })
 export default class MyFormModule { }

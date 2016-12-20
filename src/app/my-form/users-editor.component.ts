@@ -3,7 +3,7 @@ import {MyUsersService} from "../my-form/my-users.service";
 import {User} from "../my-form/user.model";
 import {ActivatedRoute, Router} from "@angular/router";
 
-import {SelectItem} from "primeng/components/common/api";
+import {SelectItem, ConfirmationService} from "primeng/components/common/api";
 import {UserRoleItem} from "./user-role.model";
 
 /**
@@ -15,7 +15,8 @@ import {UserRoleItem} from "./user-role.model";
   template : `
     <div>
         <ngb-alert *ngIf="message" type="success" [dismissible]="false">{{ message }}</ngb-alert>
-            
+        
+        <!-- user list section with search field -->
         <div *ngIf="showUserSearchList">
             
             <!-- switcher input field -->
@@ -42,7 +43,7 @@ import {UserRoleItem} from "./user-role.model";
                   </grid-list>
                 </div>
                 <br>
-                <button name="addUserBtn" class="btn btn-success" (click)="onClickAddUser()">Add New User</button>
+                <button name="addUserBtn" class="btn btn-info" (click)="onClickAddUser()">Add New User</button>
                 <br>
             </div>
             
@@ -75,14 +76,15 @@ import {UserRoleItem} from "./user-role.model";
                         
                         <footer>
                           <div class="ui-helper-clearfix" style="width:100%">
-                            <button type="button" pButton style="float:left" (click)="onClickAddUser()" label="Add New User"></button>
+                            <button type="button" class="btn btn-info" style="float:left; margin-right: 10px" (click)="onClickAddUser()">Add New User</button>
                             &nbsp;
-                            <button type="button" pButton style="float:left" (click)="onClickDeleteSelectedUsers()" label="Delete Users"></button>
+                            <button type="button" class="btn btn-info" style="float:left; margin-right: 10px" (click)="onClickDeleteSelectedUsers()">Delete Users</button>
                           </div>
                         </footer>
                     </p-dataTable>  
                 </div>
                 <br>
+                <p-confirmDialog width="500"></p-confirmDialog>
             </div>
             
         </div>
@@ -117,6 +119,9 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
 
   // message displayed after user submit
   message : string;
+
+  // confirm message for delete operation
+  deleteConfirmMessage : string = "Are you sure you want to delete the selected items?";
 
   // flag to choose grid-panel component
   usePrimeNgDataTable : boolean = true;
@@ -168,7 +173,9 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
    *
    * @param myUsersService
    */
-  constructor(private router: Router, private route: ActivatedRoute, private myUsersService : MyUsersService)
+  constructor(private router: Router, private route: ActivatedRoute,
+              private myUsersService : MyUsersService,
+              private confirmationService: ConfirmationService)
   {
     // initialize the usersList array
     this.usersList = [];
@@ -437,15 +444,15 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
 
           // set timeout to clear message after a few seconds
           this.activateMessageClearingTimeout();
+
+          // finally, to be sure we set the 'selectedUser' to null in order to close the editor...
+          this.selectedUser = null;
+
+          // refresh the list of users by the current/actual search term
+          this.findUsers(this.searchTerm);
         },
         err => this.handleReceivedError(err)
     );
-
-    // finally, to be sure we set the 'selectedUser' to null in order to close the editor...
-    this.selectedUser = null;
-
-    // refresh the list of users by the current/actual search term
-    this.findUsers(this.searchTerm);
   }
 
   /**
@@ -453,14 +460,54 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
    */
   onClickDeleteSelectedUsers()
   {
-    console.log('[users-editor-view] deleting selected users: ', this.selectedUsers);
+    if (this.selectedUsers.length == 0) {
+      // no user selected
+      console.log('[users-editor-view] no user selected');
+      return;
+    }
 
-    this.message = 'Currently the user deletion is not implemented in the PrimeNg DataTable component!';
+    // confirm is necessary before the delete process
+    this.confirmationService.confirm({
+        message : this.deleteConfirmMessage,
+        header : 'Delete Confirmation',
+        icon : 'fa fa-trash',
+        // define the callback method when confirmation is accepted
+        accept: () => {
+            // 'Yes' button selected
+            console.log('[users-editor-view] deleting selected users: ', this.selectedUsers);
 
-    // set timeout to clear message after a few seconds
-    this.activateMessageClearingTimeout();
+            // create an empty number array. We collect here the ID values for the selected users
+            let userIDs : number[] = [];
 
-    // TODO: it needs to be implemented
+            for (let user of this.selectedUsers) {
+                // add userID into the array
+                userIDs.push(user.id);
+            }
+
+            this.myUsersService.deleteSelectedUsers(userIDs).subscribe(
+                res => {
+                    // callback method for HTTP success response
+                    console.log('[deleteSelectedUsers] response OK');
+
+                    this.message = 'Selected users successfully deleted';
+
+                    // set timeout to clear message after a few seconds
+                    this.activateMessageClearingTimeout();
+
+                    // finally, to be sure we set the 'selectedUser' to null in order to close the editor...
+                    this.selectedUser = null;
+
+                    // refresh the list of users by the current/actual search term
+                    this.findUsers(this.searchTerm);
+                },
+                err => {
+                    // callback method for HTTP error response
+                    this.handleReceivedError(err);
+                }
+            );
+        } // end of accept callback inline function
+    }); // end of confirm
+
   }
 
   /**

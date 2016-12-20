@@ -56,6 +56,12 @@ export class MyUsersService {
     return this.http.get('/api' + '/users', {search:params}).map( (res : Response) => res.json() );
   }
 
+  /**
+   * Get an user with the given ID
+   *
+   * @param id
+   * @returns {Observable<User>}
+   */
   public getUserById(id : number) : Observable<User>
   {
     console.log('getting user by id=' + id);
@@ -67,7 +73,7 @@ export class MyUsersService {
    * add a new user
    *
    * @param newUser
-   * @returns {User}
+   * @returns {Observable<User>}
    */
   public addUser(newUser : User) : Observable<User>
   {
@@ -78,7 +84,7 @@ export class MyUsersService {
    * update the given user
    *
    * @param updatedUser
-   * @returns {User}
+   * @returns {Observable<User>}
    */
   public updateUser(updatedUser : User) : Observable<User>
   {
@@ -89,11 +95,22 @@ export class MyUsersService {
    * delete the given user
    *
    * @param deletedUser
-   * @returns {User}
+   * @returns {Observable<Response>}
    */
   public deleteUser(deletedUser : User) : Observable<Response>
   {
       return this.http.delete('/api' + '/users/' + deletedUser.id);
+  }
+
+  /**
+   *
+   *
+   * @param userIDs
+   * @returns {Observable<Response>}
+   */
+  public deleteSelectedUsers(userIDs : number[]) : Observable<Response>
+  {
+    return this.http.post('/api' + '/users/bulk/delete', JSON.stringify(userIDs), xhrHeaders());
   }
 
   /**
