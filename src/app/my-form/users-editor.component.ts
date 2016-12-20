@@ -445,9 +445,6 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
           // set timeout to clear message after a few seconds
           this.activateMessageClearingTimeout();
 
-          // finally, to be sure we set the 'selectedUser' to null in order to close the editor...
-          this.selectedUser = null;
-
           // refresh the list of users by the current/actual search term
           this.findUsers(this.searchTerm);
         },
@@ -493,9 +490,6 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
 
                     // set timeout to clear message after a few seconds
                     this.activateMessageClearingTimeout();
-
-                    // finally, to be sure we set the 'selectedUser' to null in order to close the editor...
-                    this.selectedUser = null;
 
                     // refresh the list of users by the current/actual search term
                     this.findUsers(this.searchTerm);
