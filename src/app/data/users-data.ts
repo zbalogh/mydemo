@@ -84,11 +84,101 @@ export const USER_DATA = [
     lastname : 'Hammon',
     email : 'mhammon@cars.com',
     telephone : '+3622345670',
-    mobile : '36701264065',
+    mobile : '+36701264065',
     company : 'Car Industry Ltd.',
     department : 'Sales',
     assignedRoles : [
       { label: "Guest", value: "guest" }
+    ]
+  },
+
+  {
+    id: 7,
+    userid : 'pkarsen',
+    firstname : 'Peter',
+    lastname : 'Karsen',
+    email : 'pkarsen@cars.com',
+    telephone : '+3694345110',
+    mobile : '',
+    company : '',
+    department : 'Sales',
+    assignedRoles : [
+      { label: "Standard User", value: "standard_user" }
+    ]
+  },
+
+  {
+    id: 8,
+    userid : 'marymolda',
+    firstname : 'Mary',
+    lastname : 'Molda',
+    email : 'marymolda@cars.com',
+    telephone : '+3622980564',
+    mobile : '',
+    company : '',
+    department : 'Sales',
+    assignedRoles : [
+      { label: "Standard User", value: "standard_user" }
+    ]
+  },
+
+  {
+    id: 9,
+    userid : 'dtrump',
+    firstname : 'Donald',
+    lastname : 'Trump',
+    email : 'dtrump@usa.com',
+    telephone : '+16780093211',
+    mobile : '',
+    company : '',
+    department : 'Sales',
+    assignedRoles : [
+      { label: "Standard User", value: "standard_user" }
+    ]
+  },
+
+  {
+    id: 10,
+    userid : 'travolta',
+    firstname : 'John',
+    lastname : 'Travolta',
+    email : 'travolta@cars.com',
+    telephone : '+1230567980',
+    mobile : '',
+    company : '',
+    department : 'Sales',
+    assignedRoles : [
+      { label: "Standard User", value: "standard_user" }
+    ]
+  },
+
+  {
+    id: 11,
+    userid : 'carlspencer',
+    firstname : 'Carl',
+    lastname : 'Spencer',
+    email : 'carlspencer@carl-studio.com',
+    telephone : '+498115679088',
+    mobile : '',
+    company : '',
+    department : 'Logistics',
+    assignedRoles : [
+      { label: "Standard User", value: "standard_user" }
+    ]
+  },
+
+  {
+    id: 12,
+    userid : 'imaroti',
+    firstname : 'Ivan',
+    lastname : 'Maroti',
+    email : 'imaroti@cars.com',
+    telephone : '+3622345321',
+    mobile : '',
+    company : '',
+    department : 'Accounting',
+    assignedRoles : [
+      { label: "Standard User", value: "standard_user" }
     ]
   }
 
