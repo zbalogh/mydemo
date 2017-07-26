@@ -15,16 +15,16 @@ import {FormControl} from "@angular/forms";
 export class ReactiveSearchInputComponent implements OnInit {
 
   @Input('placeholder')
-  private placeholder : string = 'Enter your search term';
+  placeholder : string = 'Enter your search term';
 
   @Input('initialValue')
-  private initialValue : string = '';
+  initialValue : string = '';
 
   // our own control to use input field as observable with rxJS
-  private searchControl : FormControl = new FormControl('');
+  searchControl : FormControl = new FormControl('');
 
   @Output('onSearchEvent')
-  private onSearchEvent : EventEmitter<String> = new EventEmitter<String>();
+  onSearchEvent : EventEmitter<String> = new EventEmitter<String>();
 
   /**
    * constructor
@@ -50,9 +50,10 @@ export class ReactiveSearchInputComponent implements OnInit {
    *
    * @param searchTerm
    */
-  private sendOnSearchEvent(searchTerm : string)
+  sendOnSearchEvent(searchTerm : string)
   {
       // send event with the current search term
       this.onSearchEvent.emit(searchTerm);
   }
+
 }

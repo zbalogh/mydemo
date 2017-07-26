@@ -79,11 +79,11 @@
             sourceHeader="Available" targetHeader="Assigned" [showSourceControls]="false" [showTargetControls]="false"
             [sourceStyle]="{'height':'200px'}" [targetStyle]="{'height':'200px'}">
             <!-- template for the pick-list elements -->
-            <template let-role>
+            <ng-template let-role>
               <div class="ui-helper-clearfix">
                 <div style="font-size:16px; float:left; margin:15px 5px 0 0">{{role.label}}</div>
               </div>
-            </template>
+            </ng-template>
         </p-pickList>
       </div>
     </div>

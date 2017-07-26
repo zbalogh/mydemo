@@ -17,25 +17,25 @@ export const appRoutes: Routes = [
   // lazy-loaded module
   {
     path: 'users',
-    loadChildren: './my-form/my-form.module'
+    loadChildren: './my-form/my-form.module#MyFormModule'
   },
 
   // lazy loaded module
   {
     path: 'myInput',
-    loadChildren: './my-input/my-input.module'
+    loadChildren: './my-input/my-input.module#MyInputModule'
   },
 
   // lazy loaded module
   {
     path: 'messages',
-    loadChildren: './messages/my-messages.module'
+    loadChildren: './messages/my-messages.module#MyMessagesModule'
   },
 
   // lazy loaded module
   {
     path: 'admin/settings',
-    loadChildren: './admin/settings/admin-settings.module'
+    loadChildren: './admin/settings/admin-settings.module#AdminSettingsModule'
   },
 
   { path: 'about', component: AboutViewComponent },

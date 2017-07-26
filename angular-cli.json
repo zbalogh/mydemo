@@ -1,6 +1,5 @@
 {
   "project": {
-    "version": "1.0.0-beta.17",
     "name": "mydemo"
   },
   "apps": [
@@ -27,10 +26,10 @@
         "../node_modules/bootstrap/dist/js/bootstrap.min.js",
         "../node_modules/chart.js/dist/Chart.min.js"
       ],
-      "environments": {
-        "source": "environments/environment.ts",
-        "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts"
+      "environmentSource": "environments/environment.ts",                                                                                                                                                                                                                            
+      "environments": {                                                                                                                                                                                                                                                              
+	"dev": "environments/environment.ts",                                                                                                                                                                                                                                        
+	"prod": "environments/environment.prod.ts"                                                                                                                                                                                                                                   
       }
     }
   ],

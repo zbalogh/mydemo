@@ -68,4 +68,4 @@ const myUsersRouting = [
     ConfirmationService
   ]
 })
-export default class MyFormModule { }
+export class MyFormModule { }

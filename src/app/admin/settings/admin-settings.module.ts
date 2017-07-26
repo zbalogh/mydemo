@@ -41,6 +41,6 @@ const adminSettingsRouting = [
 
   ]
 })
-export default class AdminSettingsModule {
+export class AdminSettingsModule {
 
 }

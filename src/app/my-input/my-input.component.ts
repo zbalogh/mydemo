@@ -21,10 +21,12 @@ import {Overlay} from "angular2-modal";
 export class MyInputComponent {
 
   // dependency injection for MyInputService
-  constructor(private myInputService : MyInputService, private overlay: Overlay, private vcRef: ViewContainerRef, private modal: Modal)
+  constructor(private myInputService : MyInputService, private vcRef: ViewContainerRef, private modal: Modal)
   {
+    // private overlay: Overlay, 
     // set default view container for modal overlay
-    overlay.defaultViewContainer = vcRef;
+    //overlay.defaultViewContainer = vcRef;
+    modal.overlay.defaultViewContainer = vcRef;
   }
 
   //internal component variable to store the entered value from the input field which defined in the template

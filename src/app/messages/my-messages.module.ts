@@ -48,6 +48,6 @@ const myMessagesRouting = [
     MyMessagesService
   ]
 })
-export default class MyMessagesModule {
+export class MyMessagesModule {
 
 }

@@ -1,4 +1,4 @@
-import {NgModule} from "@angular/core/src/metadata/ng_module";
+import {NgModule} from "@angular/core";
 import {HttpModule} from "@angular/http";
 import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
@@ -51,4 +51,4 @@ const myInputRouting = [
     MyInputService
   ],
 })
-export default class MyInputModule {}
+export class MyInputModule {}
