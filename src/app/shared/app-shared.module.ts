@@ -41,8 +41,6 @@ import {ConfirmDirective} from "./directives/confirm.directive";
     ConfirmDirective
   ],
   providers: [
-    // dependency for NgPrime ConfirmDialogModule
-    ConfirmationService
   ]
 })
 export class AppSharedModule {

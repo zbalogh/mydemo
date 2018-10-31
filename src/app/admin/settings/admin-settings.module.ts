@@ -35,7 +35,8 @@ const adminSettingsRouting = [
     AppSharedModule
   ],
   exports: [
-    AdminSettingsViewComponent
+    AdminSettingsViewComponent,
+    RouterModule
   ],
   providers: [
 

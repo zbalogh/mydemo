@@ -2,11 +2,14 @@
  * Import modules from angular libraries
  */
 import { BrowserModule } from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import {CommonModule} from "@angular/common";
 
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {ModalModule} from "angular2-modal";
+
+import {ConfirmationService} from "primeng/primeng";
 
 import "rxjs/Rx";
 
@@ -27,6 +30,7 @@ import { AppComponent } from './app.component';
   imports: [
     // required modules from angular2 library
     BrowserModule,
+	BrowserAnimationsModule,
     CommonModule,
     // Angular Bootstrap
     NgbModule.forRoot(),
@@ -38,6 +42,8 @@ import { AppComponent } from './app.component';
   ],
 
   providers : [
+    // dependency for NgPrime ConfirmDialogModule
+    ConfirmationService
   ],
 
   bootstrap: [AppComponent]

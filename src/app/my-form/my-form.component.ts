@@ -1,8 +1,8 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {NgForm} from "@angular/forms";
-import {User} from "./user.model";
-import {UserRoleItem} from "./user-role.model";
-import {SelectItem} from "primeng/components/common/api";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NgForm } from "@angular/forms";
+import { SelectItem } from "primeng/components/common/api";
+import { UserRoleItem } from "./user-role.model";
+import { User } from "./user.model";
 
 @Component({
   selector: 'my-form',
@@ -11,17 +11,18 @@ import {SelectItem} from "primeng/components/common/api";
 })
 export class MyFormComponent implements OnInit {
 
+  // tslint:disable-next-line:no-input-rename
   @Input('edit-user')
-  user : User;
+  user: User;
 
   @Input('showCancelButton')
-  showCancelButton : boolean = false;
+  showCancelButton = false;
 
   @Input('availableRoles')
-  availableRoles : UserRoleItem[];
+  availableRoles: UserRoleItem[];
 
   @Input('departmentList')
-  departmentList : SelectItem[];
+  departmentList: SelectItem[];
 
   @Output('submitted')
   submitted = new EventEmitter();
@@ -43,7 +44,7 @@ export class MyFormComponent implements OnInit {
   /**
    * handler method when the form is submitted
    */
-  onSubmit(form : NgForm)
+  onSubmit(form: NgForm)
   {
     console.log("[my-form] form has been submitted. form values: ", form.value);
 

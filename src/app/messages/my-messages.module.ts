@@ -42,7 +42,8 @@ const myMessagesRouting = [
     AppSharedModule
   ],
   exports: [
-    MessagesViewComponent
+    MessagesViewComponent,
+    RouterModule
   ],
   providers: [
     MyMessagesService

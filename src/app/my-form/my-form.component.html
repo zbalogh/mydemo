@@ -72,14 +72,14 @@
       </div>
     </div>
 
-    <div class="row form-group">
+    <div *ngIf="true" class="row form-group">
       <label class="control-label col-sm-3" for="rolesAssign">Roles Assignment:</label>
       <div class="col-sm-4">
         <p-pickList id="rolesAssign" [responsive]="true" [source]="availableRoles" [target]="user.assignedRoles"
             sourceHeader="Available" targetHeader="Assigned" [showSourceControls]="false" [showTargetControls]="false"
             [sourceStyle]="{'height':'200px'}" [targetStyle]="{'height':'200px'}">
             <!-- template for the pick-list elements -->
-            <ng-template let-role>
+            <ng-template let-role pTemplate="item">
               <div class="ui-helper-clearfix">
                 <div style="font-size:16px; float:left; margin:15px 5px 0 0">{{role.label}}</div>
               </div>

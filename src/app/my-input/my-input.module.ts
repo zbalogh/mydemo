@@ -45,7 +45,8 @@ const myInputRouting = [
     AutoCompleteModule
   ],
   exports : [
-    MyInputViewComponent
+    MyInputViewComponent,
+    RouterModule
   ],
   providers: [
     MyInputService

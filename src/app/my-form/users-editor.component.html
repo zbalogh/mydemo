@@ -1,0 +1,89 @@
+<div>
+    <ngb-alert *ngIf="message" type="success" [dismissible]="false">{{ message }}</ngb-alert>
+    
+    <!-- user list section with search field -->
+    <div *ngIf="!showUserEditorForm">
+        
+        <!-- switcher input field -->
+        <div>
+            <p-inputSwitch [(ngModel)]="usePrimeNgDataTable"></p-inputSwitch> <b>Use PrimeNg DataTable Component</b>
+            <br><br>
+        </div>
+        
+        <div>
+            <p-inputSwitch [(ngModel)]="ROUTE_TO_USER_EDITOR_FORM"></p-inputSwitch> <b>Use Routing to user editor</b>
+            <br><br><br>
+        </div>
+        
+        <!-- RxJS based search field -->
+        <div class="row col-sm-4">
+              <search-input placeholder="Search for users" [initialValue]="searchTerm" (onSearchEvent)="onSearchUsers($event)"></search-input>
+              <br>
+        </div>
+        
+        <!-- users list with my own grid-list component -->
+        <div *ngIf="!usePrimeNgDataTable">
+            <div class="row col-sm-12">
+                <grid-list [columns]="columns"
+                         [data]="userslist"
+                         [orderByColumns]="['+userid']"
+                         [showSelectButton]="true"
+                         [showDeleteButton]="true"
+                         [confirmDelete]="true"
+                         (selectItem)="onSelectedUser($event)"
+                         (deleteItem)="onDeleteUser($event)">
+                </grid-list>
+                <br>
+                <button name="addUserBtn" class="btn btn-info" (click)="onClickAddUser()">Add New User</button>
+                <br><br>
+            </div>
+        </div>
+        
+        <!-- users list with PrimeNg data-table component -->
+        <div *ngIf="usePrimeNgDataTable">
+            <div class="row col-sm-12">
+                <p-dataTable [value]="userslist" [(selection)]="selectedUsers" (onRowDblclick)="onRowDblclick($event)" [paginator]="true" rows="10" [responsive]="true">
+                    <header><h4>Users List</h4></header>
+                    
+                    <p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+                    <p-column styleClass="col-button" [style]="{'width':'60px'}" >
+                         <ng-template let-user="rowData" pTemplate="body">
+                              <button type="button" pButton (click)="onSelectedUser(user)" icon="fa-pencil-square-o"></button>
+                          </ng-template>
+                    </p-column>
+                    
+                    <p-column field="userid" header="UserID" [sortable]="true"></p-column>
+                    <p-column field="firstname" header="FirstName" [sortable]="true"></p-column>
+                    <p-column field="lastname" header="LastName" [sortable]="true"></p-column>
+                    <p-column field="email" header="Email" [sortable]="true"></p-column>
+                    <p-column field="telephone" header="Telephone" [sortable]="true"></p-column>
+                    <p-column field="mobile" header="Mobile" [sortable]="true"></p-column>
+                    <p-column field="company" header="Company" [sortable]="true"></p-column>
+                    
+                    <p-column field="department" header="Department" [sortable]="true">
+                        <ng-template let-col let-user="rowData" pTemplate="body">
+                            <span [style.color]="'green'">{{ user[col.field] }}</span>
+                        </ng-template>
+                    </p-column>
+                    
+                    <p-footer>
+                      <div class="ui-helper-clearfix" style="width:100%">
+                        <button type="button" class="btn btn-info" style="float:left; margin-right: 10px" (click)="onClickAddUser()">Add New User</button>
+                        &nbsp;
+                        <button type="button" class="btn btn-info" style="float:left; margin-right: 10px" (click)="onClickDeleteSelectedUsers()">Delete Users</button>
+                      </div>
+                    </p-footer>
+                </p-dataTable>  
+            </div>
+            <br>
+            <p-confirmDialog width="500"></p-confirmDialog>
+        </div>
+        
+    </div>
+
+    <!-- user editor section -->
+    <div *ngIf="showUserEditorForm">
+        <my-form [edit-user]="selectedUser" [showCancelButton]="true" [departmentList]="departmentList" [availableRoles]="availableRoles" (submitted)="onMyFormSubmitted($event)" (cancelled)="onMyFormCancelled($event)"></my-form>
+    </div>
+</div>
+<br>

@@ -1,138 +1,55 @@
-import {Component, OnInit, OnDestroy} from "@angular/core";
-import {MyUsersService} from "../my-form/my-users.service";
-import {User} from "../my-form/user.model";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ConfirmationService, SelectItem } from "primeng/components/common/api";
+import { MyUsersService } from "../my-form/my-users.service";
+import { User } from "../my-form/user.model";
+import { UserRoleItem } from "./user-role.model";
 
-import {SelectItem, ConfirmationService} from "primeng/components/common/api";
-import {UserRoleItem} from "./user-role.model";
 
 /**
  * View Component to use the components in the 'my-form' module
  */
 @Component({
   selector : 'users-editor-view',
-
-  template : `
-    <div>
-        <ngb-alert *ngIf="message" type="success" [dismissible]="false">{{ message }}</ngb-alert>
-        
-        <!-- user list section with search field -->
-        <div *ngIf="showUserSearchList">
-            
-            <!-- switcher input field -->
-            <p-inputSwitch [(ngModel)]="usePrimeNgDataTable"></p-inputSwitch> <b>Use PrimeNg DataTable Component</b>
-            <br><br>
-            
-            <!-- RxJS based search field -->
-            <div class="row col-sm-2">
-                  <search-input placeholder="Search for users" [initialValue]="searchTerm" (onSearchEvent)="onSearchUsers($event)"></search-input>
-            </div>
-            <br><br>
-            
-            <!-- users list with my own grid-list component -->
-            <div *ngIf="!usePrimeNgDataTable">
-                <div class="row col-sm-12">
-                  <grid-list [columns]="columns"
-                             [data]="userslist"
-                             [orderByColumns]="['+userid']"
-                             [showSelectButton]="true"
-                             [showDeleteButton]="true"
-                             [confirmDelete]="true"
-                             (selectItem)="onSelectedUser($event)"
-                             (deleteItem)="onDeleteUser($event)">
-                  </grid-list>
-                </div>
-                <br>
-                <button name="addUserBtn" class="btn btn-info" (click)="onClickAddUser()">Add New User</button>
-                <br>
-            </div>
-            
-            <!-- users list with PrimeNg data-table component -->
-            <div *ngIf="usePrimeNgDataTable">
-                <div class="row col-sm-12">
-                    <p-dataTable [value]="userslist" [(selection)]="selectedUsers" (onRowDblclick)="onRowDblclick($event)" [paginator]="true" rows="10" [responsive]="true">
-                        <header><h4>Users List</h4></header>
-                        
-                        <p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
-                        <p-column styleClass="col-button" [style]="{'width':'60px'}" >
-                             <template let-user="rowData" pTemplate="body">
-                                  <button type="button" pButton (click)="onSelectedUser(user)" icon="fa-pencil-square-o"></button>
-                              </template>
-                        </p-column>
-                        
-                        <p-column field="userid" header="UserID" [sortable]="true"></p-column>
-                        <p-column field="firstname" header="FirstName" [sortable]="true"></p-column>
-                        <p-column field="lastname" header="LastName" [sortable]="true"></p-column>
-                        <p-column field="email" header="Email" [sortable]="true"></p-column>
-                        <p-column field="telephone" header="Telephone" [sortable]="true"></p-column>
-                        <p-column field="mobile" header="Mobile" [sortable]="true"></p-column>
-                        <p-column field="company" header="Company" [sortable]="true"></p-column>
-                        
-                        <p-column field="department" header="Department" [sortable]="true">
-                            <template let-col let-user="rowData" pTemplate="body">
-                                <span [style.color]="'green'">{{ user[col.field] }}</span>
-                            </template>
-                        </p-column>
-                        
-                        <footer>
-                          <div class="ui-helper-clearfix" style="width:100%">
-                            <button type="button" class="btn btn-info" style="float:left; margin-right: 10px" (click)="onClickAddUser()">Add New User</button>
-                            &nbsp;
-                            <button type="button" class="btn btn-info" style="float:left; margin-right: 10px" (click)="onClickDeleteSelectedUsers()">Delete Users</button>
-                          </div>
-                        </footer>
-                    </p-dataTable>  
-                </div>
-                <br>
-                <p-confirmDialog width="500"></p-confirmDialog>
-            </div>
-            
-        </div>
-    
-        <!-- user editor section -->
-        <div *ngIf="showUserEditorForm">
-            <my-form [edit-user]="selectedUser" [showCancelButton]="true" [departmentList]="departmentList" [availableRoles]="availableRoles" (submitted)="onMyFormSubmitted($event)" (cancelled)="onMyFormCancelled($event)"></my-form>
-        </div>
-    </div>
-`
+  templateUrl: './users-editor.component.html'
 })
 export class UsersEditorViewComponent implements OnInit, OnDestroy {
 
   // a flag to turn on/off routing to user editor component with angular routing mechanism
-  ROUTE_TO_USER_EDITOR_FORM : boolean = true;
+  ROUTE_TO_USER_EDITOR_FORM = true;
 
   // selectedUser object which is used for editing via 'my-form' component
   // as default we initialize it with NULL value
-  selectedUser : User = null;
+  selectedUser: User = null;
 
   // array for primeNG grid component where we collect the selected users
-  selectedUsers : User[] = [];
+  selectedUsers: User[] = [];
 
   // stores the current entered search value
-  private searchTerm : string = '';
+  searchTerm = '';
 
   // list of users which will be shown
-  private usersList : User[];
+  private usersList: User[];
 
   // queryParams subscription
-  private queryParamsSubscription : any;
+  private queryParamsSubscription: any;
 
   // message displayed after user submit
-  message : string;
+  message: string;
 
   // confirm message for delete operation
-  deleteConfirmMessage : string = "Are you sure you want to delete the selected items?";
+  deleteConfirmMessage = "Are you sure you want to delete the selected items?";
 
   // flag to choose grid-panel component
-  usePrimeNgDataTable : boolean = true;
+  usePrimeNgDataTable = true;
 
-  departmentList : SelectItem[];
-  availableRoles : UserRoleItem[];
+  departmentList: SelectItem[];
+  availableRoles: UserRoleItem[];
 
   /*
    * column definitions for grid-list
    */
-  columns : any[] = [
+  columns: any[] = [
     {
       id : 'userid',
       label : 'UserID'
@@ -174,7 +91,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
    * @param myUsersService
    */
   constructor(private router: Router, private route: ActivatedRoute,
-              private myUsersService : MyUsersService,
+              private myUsersService: MyUsersService,
               private confirmationService: ConfirmationService)
   {
     // initialize the usersList array
@@ -211,7 +128,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
    *
    * @returns {User[]}
    */
-  get userslist() : User[]
+  get userslist(): User[]
   {
     return this.usersList;
   }
@@ -221,7 +138,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
    *
    * @returns {boolean}
    */
-  get showUserEditorForm() : boolean
+  get showUserEditorForm(): boolean
   {
     if (this.selectedUser != null) {
       // if the 'selectedUser' is neither null nor undefined then we return true
@@ -235,7 +152,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
    *
    * @returns {boolean}
    */
-  get showUserSearchList() : boolean
+  get showUserSearchList(): boolean
   {
     if (this.selectedUser == null) {
       // if no 'selectedUser' then show search and list panels
@@ -245,7 +162,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
   }
 
 
-  createEmptyNewUser() : User
+  createEmptyNewUser(): User
   {
     let newUser = new User();
 
@@ -261,7 +178,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
    *
    * @param user
    */
-  private getUserDependencies(user : User)
+  private getUserDependencies(user: User)
   {
     // get list of all departments which will be shown in the dropdown
     this.getDepartmentList();
@@ -276,7 +193,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
     this.departmentList = this.myUsersService.getDepartmentList();
   }
 
-  private getAvailableUserRoles(user : User)
+  private getAvailableUserRoles(user: User)
   {
     // get list of available roles from the service
     this.availableRoles = this.myUsersService.getAvailableUserRoles(user);
@@ -301,7 +218,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
    *
    * @param event
    */
-  onMyFormSubmitted(submittedUser : User)
+  onMyFormSubmitted(submittedUser: User)
   {
     console.log('[users-editor-view] The my-form has been submitted: ', submittedUser);
 
@@ -327,7 +244,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  handleSuccessUserCreation(newUser : User)
+  handleSuccessUserCreation(newUser: User)
   {
       console.log('[users-editor-view] addUser() response OK | ', newUser);
 
@@ -347,7 +264,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
       this.findUsers(this.searchTerm);
   }
 
-  handleSuccessUserUpdate(updatedUser : User)
+  handleSuccessUserUpdate(updatedUser: User)
   {
       console.log('[users-editor-view] updateUser() response OK | ', updatedUser);
 
@@ -400,7 +317,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
    *
    * @param user
    */
-  onSelectedUser(user : User)
+  onSelectedUser(user: User)
   {
     console.log('[users-editor-view] selected user: ', user);
 
@@ -432,7 +349,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
    *
    * @param user
    */
-  onDeleteUser(user : User)
+  onDeleteUser(user: User)
   {
     console.log('[users-editor-view] deleting user: ', user);
 
@@ -457,7 +374,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
    */
   onClickDeleteSelectedUsers()
   {
-    if (this.selectedUsers.length == 0) {
+    if (this.selectedUsers.length === 0) {
       // no user selected
       console.log('[users-editor-view] no user selected');
       return;
@@ -474,7 +391,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
             console.log('[users-editor-view] deleting selected users: ', this.selectedUsers);
 
             // create an empty number array. We collect here the ID values for the selected users
-            let userIDs : number[] = [];
+            let userIDs: number[] = [];
 
             for (let user of this.selectedUsers) {
                 // add userID into the array
@@ -509,7 +426,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
    *
    * @param term
    */
-  onSearchUsers(term : string)
+  onSearchUsers(term: string)
   {
       console.log('[users-editor-view] search input value: ' + term);
 
@@ -522,7 +439,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
   /**
    * find users by the current/actual search term
    */
-  findUsers(term : string) : void
+  findUsers(term: string): void
   {
     this.myUsersService.findUsers(term)
       .subscribe(
@@ -550,7 +467,7 @@ export class UsersEditorViewComponent implements OnInit, OnDestroy {
   /**
    * get all users without search term
    */
-  getAllUsers() : void
+  getAllUsers(): void
   {
     this.findUsers('');
   }
